@@ -42,7 +42,13 @@ tasks.javadoc {
     enabled = false
 }
 
-val dokkaHtml by tasks.getting(DokkaTask::class)
+val dokkaHtml by tasks.getting(DokkaTask::class) {
+    moduleName.set("Karith")
+    dokkaSourceSets["main"].apply {
+        includes.from("$projectDir/docs/kdoc-module.md")
+    }
+}
+
 tasks.replace("javadocJar", Jar::class.java).apply {
     dependsOn(dokkaHtml)
     archiveClassifier.set("javadoc")

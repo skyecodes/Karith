@@ -1,60 +1,8 @@
-# Karith
-
-### Kotlin Arithmetic Parser
-
-[![Maven Central](https://img.shields.io/maven-central/v/dev.franckyi/karith)](https://search.maven.org/artifact/dev.franckyi.karith/karith)
-[![Documentation Status](https://readthedocs.org/projects/karith/badge/?version=latest)](https://karith.franckyi.dev/)
-[![License](https://img.shields.io/github/license/Franckyi/Karith)](https://mit-license.org/)
-
-### [Docs (WIP)](https://karith.franckyi.dev/) | [KDoc](https://pages.franckyi.dev/Karith/)
-
-> ***NOTE: This is a work in progress and the API might still change significantly. Make sure to check the changelog
-before upgrading versions.***
-
-* [Installation](#installation)
-  * [Gradle (Groovy)](#gradle-(groovy))
-  * [Gradle (Kotlin)](#gradle-(kotlin))
-  * [Maven](#maven)
-* [Usage](#usage)
-  * [Simple example](#simple-example)
-    * [Creating a context](#creating-a-context)
-    * [Parsing an expression](#parsing-an-expression)
-    * [Computing a result](#computing-a-result)
-* [Advanced usage](#advanced-usage)
-  * [Builtin elements](#builtin-elements)
-  * [Cache](#cache)
-  * [Internal algorithm](#internal-algorithm)
-* [Building](#building)
-
-## Installation
-
-### Gradle (Groovy)
-
-```groovy
-implementation 'dev.franckyi:karith:0.1.0'
-```
-
-### Gradle (Kotlin)
-
-```kotlin
-implementation("dev.franckyi:karith:0.1.0")
-```
-
-### Maven
-
-```xml
-<dependency>
-    <groupId>dev.franckyi</groupId>
-    <artifactId>karith</artifactId>
-    <version>0.1.0</version>
-</dependency>
-```
-
-## Usage
+# Quickstart
 
 The Karith library is designed to be easy to use and highly configurable.
 
-### Simple example
+## Simple example
 
 ```kotlin
 val res = "1 + 2".result() // 3.0
@@ -65,14 +13,14 @@ val res = "6 / min(x,y)".intResultWith("x" to 2, "y" to 3) // 3
 
 > Note: The above example uses a global context. It is recommended to build and use your own context instead.
 
-### Creating a context
+## Creating a context
 
 First of all, you need to create a context. A context is an object that contains all the operators, variables and
 functions that you can parse in an expression. A context can also cache expressions and their result.
 
 A context is usually created by including some modules, operators, variables and functions in it. Modules are
 collections of operators, variables and functions. You can find more information about builtin modules, operators,
-variables and functions in the [Builtin elements](#builtin-elements) section.
+variables and functions in the [Builtin elements](advanced.md#builtin-elements) section.
 
 You can easily create your own context using helper functions. Here is an example:
 
@@ -87,7 +35,7 @@ val ctx = baseContext()
 val ctx = defaultContext()
 ```
 
-### Parsing an expression
+## Parsing an expression
 
 You can parse an expression using the `expression` or `expressionWith` method of a context.
 
@@ -98,7 +46,7 @@ val expr = ctx.expression("6 % 4")
 val expr = ctx.expressionWith("6 / min(x,y)", "x", "y")
 ```
 
-### Computing a result
+## Computing a result
 
 You can compute the result of an expression using the `result`, `intResult` `resultWith`, or `intResultWith` method of
 an expression.
@@ -115,24 +63,4 @@ val res = expr.intResult() // 2
 
 val expr = ctx.expressionWith("6 / min(x,y)", "x", "y")
 val res = expr.intResultWith("x" to 2, "y" to 3) // 3
-```
-
-## Advanced usage
-
-TODO
-
-### Builtin elements
-
-### Cache
-
-### Internal algorithm
-
-## Building
-
-You can build Karith using these commands:
-
-```shell
-git clone https://github.com/Franckyi/Karith
-cd Karith
-./gradlew build
 ```
