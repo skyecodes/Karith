@@ -2,11 +2,11 @@
 
 ### Kotlin Arithmetic Parser
 
-[![Maven Central](https://img.shields.io/maven-central/v/dev.franckyi/karith)](https://search.maven.org/artifact/dev.franckyi.karith/karith)
-[![Documentation Status](https://readthedocs.org/projects/karith/badge/?version=latest)](https://karith.franckyi.dev/)
-[![License](https://img.shields.io/github/license/Franckyi/Karith)](https://mit-license.org/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.skyecodes.karith/karith)](https://search.maven.org/artifact/com.skyecodes.karith/karith)
+[![Documentation Status](https://readthedocs.org/projects/karith/badge/?version=latest)](https://karith.skye.codes/)
+[![License](https://img.shields.io/github/license/skyecodes/Karith)](https://mit-license.org/)
 
-### [Docs (WIP)](https://karith.franckyi.dev/) | [KDoc](https://pages.franckyi.dev/Karith/)
+### [Docs (WIP)](https://karith.skye.codes/) | [KDoc](https://pages.skye.codes/Karith/)
 
 > ***NOTE: This is a work in progress and the API might still change significantly. Make sure to check the changelog
 before upgrading versions.***
@@ -31,22 +31,22 @@ before upgrading versions.***
 ### Gradle (Groovy)
 
 ```groovy
-implementation 'dev.franckyi:karith:0.1.0'
+implementation 'com.skyecodes:karith:0.2.0'
 ```
 
 ### Gradle (Kotlin)
 
 ```kotlin
-implementation("dev.franckyi:karith:0.1.0")
+implementation("com.skyecodes:karith:0.2.0")
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-    <groupId>dev.franckyi</groupId>
+    <groupId>com.skyecodes</groupId>
     <artifactId>karith</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -132,7 +132,7 @@ TODO
 You can build Karith using these commands:
 
 ```shell
-git clone https://github.com/Franckyi/Karith
+git clone https://github.com/skyecodes/Karith
 cd Karith
 ./gradlew build
 ```

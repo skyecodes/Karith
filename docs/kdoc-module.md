@@ -4,14 +4,14 @@
 
 Other links:
 
-* [Documentation (WIP)](https://karith.franckyi.dev/)
-* [GitHub repository](https://github.com/Franckyi/Karith)
-* [Maven Central](https://search.maven.org/artifact/dev.franckyi/karith)
+* [Documentation (WIP)](https://karith.skye.codes/)
+* [GitHub repository](https://github.com/skyecodes/Karith)
+* [Maven Central](https://search.maven.org/artifact/com.skyecodes.karith/karith)
 
-# Package dev.franckyi.karith.api
+# Package com.skyecodes.karith.api
 
 Contains all the types, functions and properties that can be used in the Karith API.
 
-# Package dev.franckyi.karith.api.builtin
+# Package com.skyecodes.karith.api.builtin
 
 Contains some builtin modules, operators, functions and constants. 

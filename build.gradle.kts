@@ -1,68 +1,65 @@
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.dokka") version "1.7.10"
+    kotlin("multiplatform") version "2.0.21"
+    id("app.cash.burst") version "2.1.0"
+    id("dev.mokkery") version "2.5.1"
+    id("org.jetbrains.dokka") version "1.9.20"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
     idea
     signing
     `maven-publish`
 }
 
-group = "dev.franckyi"
-version = "0.1.0"
-
-val mockkVersion: String by properties
+group = "com.skyecodes"
+version = "0.2.0"
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("io.mockk:mockk:$mockkVersion")
-}
-
-java {
+kotlin {
     withSourcesJar()
-    withJavadocJar()
-}
+    jvm()
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+    wasmJs {
+        browser()
+        nodejs()
+    }
+    wasmWasi {
+        nodejs()
+    }
 
-tasks.test {
-    useJUnitPlatform()
+    sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
 
-tasks.javadoc {
-    enabled = false
-}
-
-val dokkaHtml by tasks.getting(DokkaTask::class) {
+tasks.withType<DokkaTask>().configureEach {
     moduleName.set("Karith")
-    dokkaSourceSets["main"].apply {
+    dokkaSourceSets["commonMain"].apply {
         includes.from("$projectDir/docs/kdoc-module.md")
     }
 }
 
-tasks.replace("javadocJar", Jar::class.java).apply {
-    dependsOn(dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaHtml.outputDirectory)
-}
-
-publishing {
+/*publishing {
     publications {
         create<MavenPublication>("karith") {
             from(components["java"])
             pom {
                 name.set("Karith")
                 description.set("Kotlin Arithmetic Parser")
-                url.set("https://github.com/Franckyi/Karith")
+                url.set("https://github.com/skyecodes/Karith")
                 licenses {
                     license {
                         name.set("MIT License")
@@ -71,15 +68,15 @@ publishing {
                 }
                 developers {
                     developer {
-                        id.set("Franckyi")
-                        name.set("Franck Velasco")
-                        email.set("franck.velasco@hotmail.fr")
+                        id.set("skyecodes")
+                        name.set("skyecodes")
+                        email.set("skyecodeso@proton.me")
                     }
                 }
                 scm {
-                    connection.set("scm:git:https://github.com/Franckyi/Karith.git")
-                    developerConnection.set("scm:git:https://github.com/Franckyi/Karith.git")
-                    url.set("https://github.com/Franckyi/Karith")
+                    connection.set("scm:git:https://github.com/skyecodes/Karith.git")
+                    developerConnection.set("scm:git:https://github.com/skyecodes/Karith.git")
+                    url.set("https://github.com/skyecodes/Karith")
                 }
             }
         }
@@ -98,4 +95,4 @@ nexusPublishing {
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
-}
+}*/

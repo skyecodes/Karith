@@ -26,6 +26,6 @@ build/building
 
 ## External links
 
-* [KDoc](https://pages.franckyi.dev/Karith/)
-* [GitHub repository](https://github.com/Franckyi/Karith)
-* [Maven Central](https://search.maven.org/artifact/dev.franckyi/karith)
+* [KDoc](https://pages.skye.codes/Karith/)
+* [GitHub repository](https://github.com/skyecodes/Karith)
+* [Maven Central](https://search.maven.org/artifact/com.skyecodes.karith/karith)

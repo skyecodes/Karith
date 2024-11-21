@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Karith'
-copyright = '2022, Franck Velasco'
-author = 'Franckyi'
-release = '0.1.0'
+copyright = '2024, skyecodes'
+author = 'skyecodes'
+release = '0.2.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
