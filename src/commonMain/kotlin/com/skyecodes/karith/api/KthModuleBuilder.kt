@@ -3,7 +3,7 @@ package com.skyecodes.karith.api
 /**
  * Builder interface for [KthModule].
  *
- * A module builder can be used with [module].
+ * A module builder can be used with [buildModule].
  */
 interface KthModuleBuilder : KthBuilder<KthModuleBuilder> {
     /**

@@ -3,7 +3,7 @@ package com.skyecodes.karith.api
 /**
  * Builder interface for [KthContext].
  *
- * A context builder can be used with [context], [baseContext], [mathContext] and [defaultContext].
+ * A context builder can be used with [buildContext], [buildBaseContext], [buildMathContext] and [buildDefaultContext].
  */
 interface KthContextBuilder : KthBuilder<KthContextBuilder> {
     /**

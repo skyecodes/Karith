@@ -5,6 +5,6 @@ import com.skyecodes.karith.api.KthModule
 import com.skyecodes.karith.api.KthOperator
 
 internal data class KthModuleImpl(
-    override val elementMap: MutableMap<String, KthElement>,
+    override val elementMap: Map<String, KthElement>,
     override val combinerOperator: KthOperator?
 ) : KthModule

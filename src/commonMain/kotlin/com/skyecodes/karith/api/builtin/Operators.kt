@@ -1,6 +1,6 @@
 package com.skyecodes.karith.api.builtin
 
-import com.skyecodes.karith.api.operator
+import com.skyecodes.karith.api.createOperator
 import kotlin.math.pow
 
 /**
@@ -19,7 +19,7 @@ object Operators {
      * @see kotlin.math.pow
      */
     val POWER by lazy {
-        operator("^", 15, false) { a, b ->
+        createOperator("^", 15, false) { a, b ->
             a.pow(b)
         }
     }
@@ -32,7 +32,7 @@ object Operators {
      * @see Double.times
      */
     val TIMES by lazy {
-        operator("*", 12) { a, b ->
+        createOperator("*", 12) { a, b ->
             a * b
         }
     }
@@ -45,7 +45,7 @@ object Operators {
      * @see Double.div
      */
     val DIVIDE by lazy {
-        operator("/", 12) { a, b ->
+        createOperator("/", 12) { a, b ->
             a / b
         }
     }
@@ -58,7 +58,7 @@ object Operators {
      * @see Double.rem
      */
     val REMAINDER by lazy {
-        operator("%", 12) { a, b ->
+        createOperator("%", 12) { a, b ->
             a % b
         }
     }
@@ -71,7 +71,7 @@ object Operators {
      * @see Double.plus
      */
     val PLUS by lazy {
-        operator("+", 11) { a, b ->
+        createOperator("+", 11) { a, b ->
             a + b
         }
     }
@@ -84,7 +84,7 @@ object Operators {
      * @see Double.minus
      */
     val MINUS by lazy {
-        operator("-", 11) { a, b ->
+        createOperator("-", 11) { a, b ->
             a - b
         }
     }
@@ -97,7 +97,7 @@ object Operators {
      * @see Int.shl
      */
     val SHIFT_LEFT by lazy {
-        operator("<<", 10) { a, b ->
+        createOperator("<<", 10) { a, b ->
             (a.toInt() shl b.toInt()).toDouble()
         }
     }
@@ -110,7 +110,7 @@ object Operators {
      * @see Int.shr
      */
     val SHIFT_RIGHT by lazy {
-        operator(">>", 10) { a, b ->
+        createOperator(">>", 10) { a, b ->
             (a.toInt() shr b.toInt()).toDouble()
         }
     }
@@ -123,7 +123,7 @@ object Operators {
      * @see Int.ushr
      */
     val UNSIGNED_SHIFT_RIGHT by lazy {
-        operator(">>>", 10) { a, b ->
+        createOperator(">>>", 10) { a, b ->
             (a.toInt() ushr b.toInt()).toDouble()
         }
     }
@@ -136,7 +136,7 @@ object Operators {
      * @see Int.and
      */
     val AND by lazy {
-        operator("&", 7) { a, b ->
+        createOperator("&", 7) { a, b ->
             (a.toInt() and b.toInt()).toDouble()
         }
     }
@@ -151,7 +151,7 @@ object Operators {
      * @see Int.or
      */
     val XOR by lazy {
-        operator("^", 6) { a, b ->
+        createOperator("^", 6) { a, b ->
             (a.toInt() xor b.toInt()).toDouble()
         }
     }
@@ -164,7 +164,7 @@ object Operators {
      * @see Int.or
      */
     val OR by lazy {
-        operator("|", 5) { a, b ->
+        createOperator("|", 5) { a, b ->
             (a.toInt() or b.toInt()).toDouble()
         }
     }

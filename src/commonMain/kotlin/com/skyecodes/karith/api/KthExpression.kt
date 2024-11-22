@@ -4,7 +4,7 @@ package com.skyecodes.karith.api
  * Expressions contain all the data needed to evaluate an arithmetic expression
  * when given input variables (if any are needed).
  *
- * You can compute an expression's result with the [result], [intResult], [resultWith] or [intResultWith] method.
+ * You can compute an expression's result with the [getResult], [getResultAsInt], [getResultWith] or [getResultAsIntWith] method.
  *
  * They are built by a [KthContext].
  */
@@ -46,7 +46,7 @@ interface KthExpression {
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
      * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
      */
-    fun result(): Double
+    fun getResult(): Double
 
     /**
      * Evaluates the expression and return its result as an integer.
@@ -56,7 +56,7 @@ interface KthExpression {
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
      * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
      */
-    fun intResult(): Int = result().toInt()
+    fun getResultAsInt(): Int = getResult().toInt()
 
     /**
      * Evaluates the expression using the input variables and return its result.
@@ -67,7 +67,7 @@ interface KthExpression {
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
      * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
      */
-    fun resultWith(vararg inputVars: Pair<String, Number>): Double
+    fun getResultWith(vararg inputVars: Pair<String, Number>): Double
 
     /**
      * Evaluates the expression using the input variables and return its result as an integer.
@@ -78,7 +78,7 @@ interface KthExpression {
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
      * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
      */
-    fun intResultWith(vararg inputVars: Pair<String, Number>): Int = resultWith(*inputVars).toInt()
+    fun getResultAsIntWith(vararg inputVars: Pair<String, Number>): Int = getResultWith(*inputVars).toInt()
 
     /**
      * Clears the result cache of the expression.

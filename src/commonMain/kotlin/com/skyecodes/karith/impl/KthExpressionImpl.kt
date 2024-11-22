@@ -1,6 +1,5 @@
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.api.KthComputer
 import com.skyecodes.karith.api.KthExpression
 import com.skyecodes.karith.api.KthToken
 import com.skyecodes.karith.api.KthUndefinedVariableException
@@ -8,20 +7,17 @@ import com.skyecodes.karith.api.KthUndefinedVariableException
 internal class KthExpressionImpl(
     internal val tokens: List<KthToken>,
     override val expressionVars: Set<String>,
-    override var cacheEnabled: Boolean
+    override var cacheEnabled: Boolean,
+    private val computer: KthComputer = KthComputer
 ) : KthExpression {
     internal var singleResult: Double? = null
     internal val resultCache = mutableMapOf<Map<String, Number>, Double>()
-    internal var computer: KthComputer = KthComputerImpl
 
-    override fun result(): Double {
-        if (singleResult == null) {
-            singleResult = resultWith()
-        }
-        return singleResult!!
+    override fun getResult(): Double {
+        return singleResult ?: getResultWith().also { singleResult = it }
     }
 
-    override fun resultWith(vararg inputVars: Pair<String, Number>): Double {
+    override fun getResultWith(vararg inputVars: Pair<String, Number>): Double {
         val variables = filterInputVariables(inputVars)
         if (cacheEnabled) {
             resultCache.forEach { (cachedVars, cachedResult) ->
@@ -30,7 +26,7 @@ internal class KthExpressionImpl(
                 }
             }
         }
-        val result = computer.compute(tokens, variables)
+        val result = computer(tokens, variables)
         if (cacheEnabled) {
             resultCache[variables] = result
         }

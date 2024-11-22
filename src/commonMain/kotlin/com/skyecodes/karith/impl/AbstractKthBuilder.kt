@@ -9,7 +9,7 @@ internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
     override var constants: MutableList<KthConstant> = mutableListOf()
     override var combinerOperator: KthOperator? = null
 
-    protected fun buildElementMap() = mutableMapOf<String, KthElement>().apply {
+    protected fun buildElementMap() = buildMap {
         putAllIfAbsent(operators, functions, constants)
         modules.forEach { lib ->
             lib.elementMap.filter { it.key !in this }.forEach { put(it.key, it.value) }

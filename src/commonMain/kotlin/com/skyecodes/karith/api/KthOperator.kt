@@ -5,7 +5,7 @@ package com.skyecodes.karith.api
  *
  * An operator takes two arguments (one on the left and one on the right) and returns a value.
  *
- * Operators can be built using the helper function [operator].
+ * Operators can be built using the helper function [asOperator].
  */
 interface KthOperator : KthElement {
     /**

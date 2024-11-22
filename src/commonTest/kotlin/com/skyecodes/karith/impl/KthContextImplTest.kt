@@ -1,6 +1,10 @@
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.api.*
+import com.skyecodes.karith.api.KthExpression
+import com.skyecodes.karith.api.KthToken
+import com.skyecodes.karith.api.buildMathContext
+import com.skyecodes.karith.api.builtin.Operators
+import com.skyecodes.karith.api.withPowerOperator
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.mock
@@ -19,45 +23,42 @@ internal class KthContextImplTest {
         val sorter: KthSorter = mock()
         val expressionFactory: (List<KthToken>, Set<String>) -> KthExpression = mock()
         val expression: KthExpression = mock()
-        val ctx = mathContext { withPowerOperator() } as KthContextImpl
-        ctx.tokenizer = tokenizer
-        ctx.sorter = sorter
-        ctx.expressionFactory = expressionFactory
+        val ctx = KthContextImpl(emptyMap(), Operators.TIMES, false, tokenizer, sorter, expressionFactory)
         // Somehow the next line crashes on WASM targets so we're using a fake instead of a mock
         //every { tokenizer.tokenize("0", emptyList()) } returns (listOf(num(0)) to emptySet())
-        every { sorter.sort(listOf(num(0))) } returns listOf(num(0))
-        every { expressionFactory.invoke(listOf(num(0)), emptySet()) } returns expression
-        every { expression.intResult() } returns -1
+        every { sorter(listOf(num(0))) } returns listOf(num(0))
+        every { expressionFactory(listOf(num(0)), emptySet()) } returns expression
+        every { expression.getResultAsInt() } returns -1
         every { expression.expressionVars } returns emptySet()
-        val expr = ctx.expressionWith("0")
-        assertEquals(-1, expr.intResult())
+        val expr = ctx.expressionOf("0")
+        assertEquals(-1, expr.getResultAsInt())
         assertEquals(emptySet<String>(), expr.expressionVars)
         //verify { tokenizer.tokenize("0", emptyList()) }
-        verify { sorter.sort(listOf(num(0))) }
-        verify { expressionFactory.invoke(listOf(num(0)), emptySet()) }
-        verify { expression.intResult() }
+        verify { sorter(listOf(num(0))) }
+        verify { expressionFactory(listOf(num(0)), emptySet()) }
+        verify { expression.getResultAsInt() }
         verify { expression.expressionVars }
     }
 
     @Test
     fun testExpression_ShouldUseExpressionCache() {
-        val ctx = mathContext { withPowerOperator() } as KthContextImpl
-        assertTrue { ctx.expression("1+2") === ctx.expression("1+2") }
+        val ctx = buildMathContext { withPowerOperator() } as KthContextImpl
+        assertTrue { ctx.expressionOf("1+2") === ctx.expressionOf("1+2") }
         assertFalse { ctx.strExpressionCache.isEmpty() }
-        assertTrue { ctx.expression("1+2") === ctx.expression("1 + 2") }
+        assertTrue { ctx.expressionOf("1+2") === ctx.expressionOf("1 + 2") }
         assertFalse { ctx.tokenizedExpressionCache.isEmpty() }
-        assertTrue { ctx.expression("1+2") === ctx.expression("1+(2)") }
+        assertTrue { ctx.expressionOf("1+2") === ctx.expressionOf("1+(2)") }
         assertFalse { ctx.sortedTokenizedExpressionCache.isEmpty() }
     }
 
     @Test
     fun testExpression_ShouldNotUseExpressionCache_WhenCacheDisabled() {
-        val ctx = mathContext { withPowerOperator(); disableCache() } as KthContextImpl
-        assertFalse { ctx.expression("1+2") === ctx.expression("1+2") }
+        val ctx = buildMathContext { withPowerOperator(); disableCache() } as KthContextImpl
+        assertFalse { ctx.expressionOf("1+2") === ctx.expressionOf("1+2") }
         assertTrue { ctx.strExpressionCache.isEmpty() }
-        assertFalse { ctx.expression("1+2") === ctx.expression("1 + 2") }
+        assertFalse { ctx.expressionOf("1+2") === ctx.expressionOf("1 + 2") }
         assertTrue { ctx.tokenizedExpressionCache.isEmpty() }
-        assertFalse { ctx.expression("1+2") === ctx.expression("1+(2)") }
+        assertFalse { ctx.expressionOf("1+2") === ctx.expressionOf("1+(2)") }
         assertTrue { ctx.sortedTokenizedExpressionCache.isEmpty() }
     }
 }

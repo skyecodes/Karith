@@ -1,6 +1,6 @@
 package com.skyecodes.karith.api.builtin
 
-import com.skyecodes.karith.api.constant
+import com.skyecodes.karith.api.createConstant
 
 /**
  * Object containing some useful constants.
@@ -16,7 +16,7 @@ object Constants {
      * @see kotlin.math.E
      */
     val E by lazy {
-        constant("e", kotlin.math.E)
+        createConstant("e", kotlin.math.E)
     }
 
     /**
@@ -27,6 +27,6 @@ object Constants {
      * @see kotlin.math.PI
      */
     val PI by lazy {
-        constant("pi", kotlin.math.PI)
+        createConstant("pi", kotlin.math.PI)
     }
 }

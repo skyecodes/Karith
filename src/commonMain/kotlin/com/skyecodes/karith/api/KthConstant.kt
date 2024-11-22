@@ -5,7 +5,7 @@ package com.skyecodes.karith.api
  *
  * A constant simply gets replaced by its value during the evaluation of an expression.
  *
- * Constants can be built using the helper function [constant].
+ * Constants can be built using the helper function [createConstant].
  */
 interface KthConstant : KthElement {
     /**

@@ -17,7 +17,7 @@ interface KthModule {
     /**
      * All the elements contained in this module: [KthOperator]s, [KthFunction]s and [KthConstant]s.
      */
-    val elementMap: MutableMap<String, KthElement>
+    val elementMap: Map<String, KthElement>
 
     /**
      * The combiner operator defines which operator is used to combine two tokens that don't have an operator between

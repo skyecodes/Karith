@@ -1,6 +1,6 @@
 package com.skyecodes.karith.api.builtin
 
-import com.skyecodes.karith.api.function
+import com.skyecodes.karith.api.createFunction
 import kotlin.math.*
 
 /**
@@ -17,7 +17,7 @@ object Functions {
      * @see kotlin.math.abs
      */
     val ABS by lazy {
-        function("abs", ::abs)
+        createFunction("abs", ::abs)
     }
 
     /**
@@ -29,7 +29,7 @@ object Functions {
      * @see kotlin.math.acos
      */
     val ACOS by lazy {
-        function("acos", ::acos)
+        createFunction("acos", ::acos)
     }
 
     /**
@@ -41,7 +41,7 @@ object Functions {
      * @see kotlin.math.acosh
      */
     val ACOSH by lazy {
-        function("acosh", ::acosh)
+        createFunction("acosh", ::acosh)
     }
 
     /**
@@ -53,7 +53,7 @@ object Functions {
      * @see kotlin.math.asin
      */
     val ASIN by lazy {
-        function("asin", ::asin)
+        createFunction("asin", ::asin)
     }
 
     /**
@@ -65,7 +65,7 @@ object Functions {
      * @see kotlin.math.asinh
      */
     val ASINH by lazy {
-        function("asinh", ::asinh)
+        createFunction("asinh", ::asinh)
     }
 
     /**
@@ -77,7 +77,7 @@ object Functions {
      * @see kotlin.math.atan
      */
     val ATAN by lazy {
-        function("atan", ::atan)
+        createFunction("atan", ::atan)
     }
 
     /**
@@ -90,7 +90,7 @@ object Functions {
      * @see kotlin.math.atan2
      */
     val ATAN2 by lazy {
-        function("atan2", ::atan2)
+        createFunction("atan2", ::atan2)
     }
 
     /**
@@ -102,7 +102,7 @@ object Functions {
      * @see kotlin.math.atanh
      */
     val ATANH by lazy {
-        function("atanh", ::atanh)
+        createFunction("atanh", ::atanh)
     }
 
     /**
@@ -114,7 +114,7 @@ object Functions {
      * @see kotlin.math.ceil
      */
     val CEIL by lazy {
-        function("ceil", ::ceil)
+        createFunction("ceil", ::ceil)
     }
 
     /**
@@ -125,7 +125,7 @@ object Functions {
      * @see kotlin.math.cos
      */
     val COS by lazy {
-        function("cos", ::cos)
+        createFunction("cos", ::cos)
     }
 
     /**
@@ -136,7 +136,7 @@ object Functions {
      * @see kotlin.math.cosh
      */
     val COSH by lazy {
-        function("cosh", ::cosh)
+        createFunction("cosh", ::cosh)
     }
 
     /**
@@ -147,7 +147,7 @@ object Functions {
      * @see kotlin.math.exp
      */
     val EXP by lazy {
-        function("exp", ::exp)
+        createFunction("exp", ::exp)
     }
 
     /**
@@ -159,7 +159,7 @@ object Functions {
      * @see kotlin.math.expm1
      */
     val EXPM1 by lazy {
-        function("expm1", ::expm1)
+        createFunction("expm1", ::expm1)
     }
 
     /**
@@ -171,7 +171,7 @@ object Functions {
      * @see kotlin.math.floor
      */
     val FLOOR by lazy {
-        function("floor", ::floor)
+        createFunction("floor", ::floor)
     }
 
     /**
@@ -182,7 +182,7 @@ object Functions {
      * @see kotlin.math.hypot
      */
     val HYPOT by lazy {
-        function("hypot", ::hypot)
+        createFunction("hypot", ::hypot)
     }
 
     /**
@@ -193,7 +193,7 @@ object Functions {
      * @see kotlin.math.ln
      */
     val LN by lazy {
-        function("ln", ::ln)
+        createFunction("ln", ::ln)
     }
 
     /**
@@ -205,7 +205,7 @@ object Functions {
      * @see kotlin.math.ln1p
      */
     val LN1P by lazy {
-        function("ln1p", ::ln1p)
+        createFunction("ln1p", ::ln1p)
     }
 
     /**
@@ -216,7 +216,7 @@ object Functions {
      * @see kotlin.math.log
      */
     val LOG by lazy {
-        function("log", ::log)
+        createFunction("log", ::log)
     }
 
     /**
@@ -227,7 +227,7 @@ object Functions {
      * @see kotlin.math.log10
      */
     val LOG10 by lazy {
-        function("log10", ::log10)
+        createFunction("log10", ::log10)
     }
 
     /**
@@ -238,7 +238,7 @@ object Functions {
      * @see kotlin.math.log2
      */
     val LOG2 by lazy {
-        function("log2", ::log2)
+        createFunction("log2", ::log2)
     }
 
     /**
@@ -249,7 +249,7 @@ object Functions {
      * @see kotlin.math.max
      */
     val MAX by lazy {
-        function("max", ::max)
+        createFunction("max", ::max)
     }
 
     /**
@@ -260,7 +260,7 @@ object Functions {
      * @see kotlin.math.min
      */
     val MIN by lazy {
-        function("min", ::min)
+        createFunction("min", ::min)
     }
 
     /**
@@ -271,7 +271,7 @@ object Functions {
      * @see kotlin.math.nextDown
      */
     val NEXT_DOWN by lazy {
-        function("nextDown", Double::nextDown)
+        createFunction("nextDown", Double::nextDown)
     }
 
     /**
@@ -282,7 +282,7 @@ object Functions {
      * @see kotlin.math.nextTowards
      */
     val NEXT_TOWARDS by lazy {
-        function("nextTowards", Double::nextTowards)
+        createFunction("nextTowards", Double::nextTowards)
     }
 
     /**
@@ -293,7 +293,7 @@ object Functions {
      * @see kotlin.math.nextUp
      */
     val NEXT_UP by lazy {
-        function("nextUp", Double::nextUp)
+        createFunction("nextUp", Double::nextUp)
     }
 
     /**
@@ -304,7 +304,7 @@ object Functions {
      * @see Long.inv
      */
     val NOT by lazy {
-        function("not") { it.toLong().inv().toDouble() }
+        createFunction("not") { it.toLong().inv().toDouble() }
     }
 
     /**
@@ -315,7 +315,7 @@ object Functions {
      * @see kotlin.math.pow
      */
     val POW by lazy {
-        function("pow", Double::pow)
+        createFunction("pow", Double::pow)
     }
 
     /**
@@ -326,7 +326,7 @@ object Functions {
      * @see kotlin.math.round
      */
     val ROUND by lazy {
-        function("round", ::round)
+        createFunction("round", ::round)
     }
 
     /**
@@ -340,7 +340,7 @@ object Functions {
      * @see kotlin.math.sign
      */
     val SIGN by lazy {
-        function("sign", ::sign)
+        createFunction("sign", ::sign)
     }
 
     /**
@@ -351,7 +351,7 @@ object Functions {
      * @see kotlin.math.sin
      */
     val SIN by lazy {
-        function("sin", ::sin)
+        createFunction("sin", ::sin)
     }
 
     /**
@@ -362,7 +362,7 @@ object Functions {
      * @see kotlin.math.sinh
      */
     val SINH by lazy {
-        function("sinh", ::sinh)
+        createFunction("sinh", ::sinh)
     }
 
     /**
@@ -373,7 +373,7 @@ object Functions {
      * @see kotlin.math.sqrt
      */
     val SQRT by lazy {
-        function("sqrt", ::sqrt)
+        createFunction("sqrt", ::sqrt)
     }
 
     /**
@@ -384,7 +384,7 @@ object Functions {
      * @see kotlin.math.tan
      */
     val TAN by lazy {
-        function("tan", ::tan)
+        createFunction("tan", ::tan)
     }
 
     /**
@@ -395,7 +395,7 @@ object Functions {
      * @see kotlin.math.tanh
      */
     val TANH by lazy {
-        function("tanh", ::tanh)
+        createFunction("tanh", ::tanh)
     }
 
     /**
@@ -407,7 +407,7 @@ object Functions {
      * @see kotlin.math.truncate
      */
     val TRUNCATE by lazy {
-        function("truncate", ::truncate)
+        createFunction("truncate", ::truncate)
     }
 
     /**
@@ -419,7 +419,7 @@ object Functions {
      * @see kotlin.math.ulp
      */
     val ULP by lazy {
-        function("ulp", Double::ulp)
+        createFunction("ulp", Double::ulp)
     }
 
     /**
@@ -430,6 +430,6 @@ object Functions {
      * @see kotlin.math.withSign
      */
     val WITH_SIGN by lazy {
-        function("withSign", Double::withSign)
+        createFunction("withSign", Double::withSign)
     }
 }
