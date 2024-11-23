@@ -52,20 +52,12 @@ interface KthBuilder<T : KthBuilder<T>> {
     var combinerOperator: KthOperator?
 
     /**
-     * Includes a module to this context or module.
-     *
-     * @param module the module to include
-     * @return this builder
-     */
-    fun include(module: KthModule) = doApply { this.modules += module }
-
-    /**
      * Includes modules to this context or module.
      *
      * @param modules the modules to include
      * @return this builder
      */
-    fun includeAll(vararg modules: KthModule) = doApply { this.modules += modules }
+    fun include(vararg modules: KthModule) = doApply { this.modules += modules }
 
     /**
      * Includes an element to this context or module.
@@ -73,7 +65,7 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param element the element to include
      * @return this builder
      */
-    fun with(element: KthContextualToken) = doApply {
+    fun with(element: KthElement) = doApply {
         when (element) {
             is KthOperator -> operators += element
             is KthFunction -> functions += element
@@ -87,15 +79,15 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param elements the elements to include
      * @return this builder
      */
-    fun withAll(vararg elements: KthContextualToken) = doApply { elements.forEach { with(it) } }
-
-    /**
-     * Includes an operator to this context or module.
-     *
-     * @param operator the operator to include
-     * @return this builder
-     */
-    fun withOperator(operator: KthOperator) = doApply { this.operators += operator }
+    fun with(vararg elements: KthElement) = doApply {
+        elements.forEach {
+            when (it) {
+                is KthOperator -> operators += it
+                is KthFunction -> functions += it
+                is KthConstant -> constants += it
+            }
+        }
+    }
 
     /**
      * Includes operators to this context or module.
@@ -103,15 +95,7 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param operators the operators to include
      * @return this builder
      */
-    fun withOperators(vararg operators: KthOperator) = doApply { this.operators += operators }
-
-    /**
-     * Includes a function to this context or module.
-     *
-     * @param function the function to include
-     * @return this builder
-     */
-    fun withFunction(function: KthFunction) = doApply { this.functions += function }
+    fun withOperator(vararg operators: KthOperator) = doApply { this.operators += operators }
 
     /**
      * Includes functions to this context or module.
@@ -119,15 +103,7 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param functions the functions to include
      * @return this builder
      */
-    fun withFunctions(vararg functions: KthFunction) = doApply { this.functions += functions }
-
-    /**
-     * Includes a constant to this context or module.
-     *
-     * @param constant the constant to include
-     * @return this builder
-     */
-    fun withConstant(constant: KthConstant) = doApply { this.constants += constant }
+    fun withFunction(vararg functions: KthFunction) = doApply { this.functions += functions }
 
     /**
      * Includes constants to this context or module.
@@ -135,7 +111,7 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param constants the constants to include
      * @return this builder
      */
-    fun withConstants(vararg constants: KthConstant) = doApply { this.constants += constants }
+    fun withConstant(vararg constants: KthConstant) = doApply { this.constants += constants }
 
     /**
      * Sets the combiner operator of this context or module.

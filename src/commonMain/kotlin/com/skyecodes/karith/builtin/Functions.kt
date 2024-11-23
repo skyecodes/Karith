@@ -43,7 +43,7 @@ object Functions {
     }
 
     /**
-     * Computes the arc cosine of the value `x`.
+     * Calculates the arc cosine of the value `x`.
      * The returned value is an angle in the range from 0.0 to `PI` radians.
      *
      * Usage: `acos(x)`
@@ -55,7 +55,7 @@ object Functions {
     }
 
     /**
-     * Computes the inverse hyperbolic cosine of the value `x`.
+     * Calculates the inverse hyperbolic cosine of the value `x`.
      * The returned value is positive `y` such that `cosh(y) == x`.
      *
      * Usage: `acosh(x)`
@@ -67,7 +67,7 @@ object Functions {
     }
 
     /**
-     * Computes the arc sine of the value `x`.
+     * Calculates the arc sine of the value `x`.
      * The returned value is an angle in the range from `-PI/2` to `PI/2` radians.
      *
      * Usage: `asin(x)`
@@ -79,7 +79,7 @@ object Functions {
     }
 
     /**
-     * Computes the inverse hyperbolic sine of the value `x`.
+     * Calculates the inverse hyperbolic sine of the value `x`.
      * The returned value is `y` such that `sinh(y) == x`.
      *
      * Usage: `asinh(x)`
@@ -91,7 +91,7 @@ object Functions {
     }
 
     /**
-     * Computes the arc tangent of the value `x`.
+     * Calculates the arc tangent of the value `x`.
      * The returned value is an angle in the range from `-PI/2` to `PI/2` radians.
      *
      * Usage: `atan(x)`
@@ -104,7 +104,7 @@ object Functions {
 
     /**
      * Returns the angle theta of the polar coordinates `(r, theta)` that correspond to
-     * the rectangular coordinates `(x, y)` by computing the arc tangent of the value `y / x`;
+     * the rectangular coordinates `(x, y)` by calculating the arc tangent of the value `y / x`;
      * the returned value is an angle in the range from `-PI` to `PI` radians.
      *
      * Usage: `atan2(y, x)`
@@ -116,7 +116,7 @@ object Functions {
     }
 
     /**
-     * Computes the inverse hyperbolic tangent of the value `x`.
+     * Calculates the inverse hyperbolic tangent of the value `x`.
      * The returned value is `y` such that `tanh(y) == x`.
      *
      * Usage: `atanh(x)`
@@ -140,7 +140,7 @@ object Functions {
     }
 
     /**
-     * Computes the cosine of the angle `x` given in radians.
+     * Calculates the cosine of the angle `x` given in radians.
      *
      * Usage: `cos(x)`
      *
@@ -151,7 +151,7 @@ object Functions {
     }
 
     /**
-     * Computes the hyperbolic cosine of the value `x`.
+     * Calculates the hyperbolic cosine of the value `x`.
      *
      * Usage: `cosh(x)`
      *
@@ -162,7 +162,7 @@ object Functions {
     }
 
     /**
-     * Computes Euler's number `e` raised to the power of the value `x`.
+     * Calculates Euler's number `e` raised to the power of the value `x`.
      *
      * Usage: `exp(x)`
      *
@@ -173,7 +173,7 @@ object Functions {
     }
 
     /**
-     * Computes `exp(x) - 1`.
+     * Calculates `exp(x) - 1`.
      * This function can be implemented to produce more precise result for `x` near zero.
      *
      * Usage: `expm1(x)`
@@ -197,7 +197,7 @@ object Functions {
     }
 
     /**
-     * Computes `sqrt(x^2 + y^2)` without intermediate overflow or underflow.
+     * Calculates `sqrt(x^2 + y^2)` without intermediate overflow or underflow.
      *
      * Usage: `hypot(x, y)`
      *
@@ -208,7 +208,7 @@ object Functions {
     }
 
     /**
-     * Computes the natural logarithm (base E) of the value `x`.
+     * Calculates the natural logarithm (base E) of the value `x`.
      *
      * Usage: `ln(x)`
      *
@@ -219,7 +219,7 @@ object Functions {
     }
 
     /**
-     * Computes ln(x + 1).
+     * Calculates ln(x + 1).
      * This function can be implemented to produce more precise result for `x` near zero.
      *
      * Usage: `ln1p(x)`
@@ -231,7 +231,7 @@ object Functions {
     }
 
     /**
-     * Computes the logarithm of the value `x` to the given `base`.
+     * Calculates the logarithm of the value `x` to the given `base`.
      *
      * Usage: `log(x, base)`
      *
@@ -242,7 +242,7 @@ object Functions {
     }
 
     /**
-     * Computes the common logarithm (base 10) of the value `x`.
+     * Calculates the common logarithm (base 10) of the value `x`.
      *
      * Usage: `log10(x)`
      *
@@ -253,7 +253,7 @@ object Functions {
     }
 
     /**
-     * Computes the binary logarithm (base 2) of the value `x`.
+     * Calculates the binary logarithm (base 2) of the value `x`.
      *
      * Usage: `log2(x)`
      *
@@ -366,7 +366,7 @@ object Functions {
     }
 
     /**
-     * Computes the sine of the angle `x` given in radians.
+     * Calculates the sine of the angle `x` given in radians.
      *
      * Usage: `sin(x)`
      *
@@ -377,7 +377,7 @@ object Functions {
     }
 
     /**
-     * Computes the hyperbolic sine of the value `x`.
+     * Calculates the hyperbolic sine of the value `x`.
      *
      * Usage: `sinh(x)`
      *
@@ -388,7 +388,7 @@ object Functions {
     }
 
     /**
-     * Computes the positive square root of the value `x`.
+     * Calculates the positive square root of the value `x`.
      *
      * Usage: `sqrt(x)`
      *
@@ -399,7 +399,7 @@ object Functions {
     }
 
     /**
-     * Computes the tangent of the angle `x` given in radians.
+     * Calculates the tangent of the angle `x` given in radians.
      *
      * Usage: `tan(x)`
      *
@@ -410,7 +410,7 @@ object Functions {
     }
 
     /**
-     * Computes the hyperbolic tangent of the value `x`.
+     * Calculates the hyperbolic tangent of the value `x`.
      *
      * Usage: `tanh(x)`
      *

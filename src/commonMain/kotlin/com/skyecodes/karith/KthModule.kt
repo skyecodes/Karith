@@ -25,7 +25,7 @@ package com.skyecodes.karith
 import com.skyecodes.karith.builtin.Modules
 
 /**
- * A module is a collection of [KthContextualToken]s to be included in a [KthContext].
+ * A module is a collection of [KthElement]s to be included in a [KthContext].
  *
  * Karith has a few builtin module:
  * * [Modules.BASE]
@@ -39,7 +39,7 @@ interface KthModule {
     /**
      * All the elements contained in this module: [KthOperator]s, [KthFunction]s and [KthConstant]s.
      */
-    val elementMap: Map<String, KthContextualToken>
+    val elementMap: Map<String, KthElement>
 
     /**
      * The combiner operator defines which operator is used to combine two tokens that don't have an operator between

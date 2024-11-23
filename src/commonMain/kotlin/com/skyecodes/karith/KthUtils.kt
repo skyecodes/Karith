@@ -25,27 +25,26 @@ package com.skyecodes.karith
 import com.skyecodes.karith.builtin.Modules
 import com.skyecodes.karith.builtin.Operators
 import com.skyecodes.karith.impl.*
+import kotlin.jvm.JvmName
 
 /**
  * A default context that includes [Modules.BASE], [Modules.MATH] and [Operators.POWER].
  *
- * Expression and result caching is disabled for this context. Result caching can be manually turned on for any
- * expression parsed by this context using [KthExpression.enableCache].
+ * Expression and result caching is enabled for this context. Result caching can be manually turned off for any
+ * expression parsed by this context using [KthExpression.disableCache].
  */
-val defaultCtx: KthContext by lazy { buildDefaultContext { disableCache() } }
+val defaultCtx: KthContext by lazy { buildDefaultContext() }
 
 /**
  * Parses an arithmetic expression from the given string using the default context.
  *
  * Any unknown alphanumeric token that is not a number or an element is considered as a variable.
  *
- * @param expressionOf the arithmetic expression to parse
+ * @param parseExpression the arithmetic expression to parse
  * @return the parsed [KthExpression]
- * @throws KthIllegalTokenException if an illegal token is found in the expression
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @see KthContext.expressionOf
+ * @see KthContext.parseExpression
  */
-fun expressionOf(expression: String): KthExpressionResult = with(defaultCtx) { this.expressionOf(expression) }
+fun parseExpression(expression: String): KthParsingResult = with(defaultCtx) { this.parseExpression(expression) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context.
@@ -53,11 +52,10 @@ fun expressionOf(expression: String): KthExpressionResult = with(defaultCtx) { t
  * Any unknown alphanumeric token that is not a number or an element is considered as a variable.
  *
  * @return the parsed [KthExpression]
- * @throws KthIllegalTokenException if an illegal token is found in the expression
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @see KthContext.asExpression
+ * @see KthContext.parseExpression
  */
-fun String.asExpression(): KthExpressionResult = with(defaultCtx) { this@asExpression.asExpression() }
+@JvmName("parseExpressionExt")
+fun String.parseExpression(): KthParsingResult = with(defaultCtx) { this@parseExpression.parseExpression() }
 
 /**
  * Parses an arithmetic expression from the given string and declared variables using the default context.
@@ -67,12 +65,10 @@ fun String.asExpression(): KthExpressionResult = with(defaultCtx) { this@asExpre
  * @param expression the arithmetic expression to parse
  * @param declaredVars the declared vars that can be used in the expression
  * @return the parsed [KthExpression]
- * @throws KthIllegalTokenException if an illegal token is found in the expression
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @see KthContext.expressionOfWith
+ * @see KthContext.parseExpressionWith
  */
-fun expressionOfWith(expression: String, vararg declaredVars: String): KthExpressionResult =
-    with(defaultCtx) { this.expressionOfWith(expression, *declaredVars) }
+fun parseExpressionWith(expression: String, vararg declaredVars: String): KthParsingResult =
+    with(defaultCtx) { this.parseExpressionWith(expression, *declaredVars) }
 
 /**
  * Parses an arithmetic expression from the receiving string and declared variables using the default context.
@@ -81,12 +77,11 @@ fun expressionOfWith(expression: String, vararg declaredVars: String): KthExpres
  *
  * @param declaredVars the declared vars that can be used in the expression
  * @return the parsed [KthExpression]
- * @throws KthIllegalTokenException if an illegal token is found in the expression
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @see KthContext.asExpressionWith
+ * @see KthContext.parseExpressionWith
  */
-fun String.asExpressionWith(vararg declaredVars: String): KthExpressionResult =
-    with(defaultCtx) { this@asExpressionWith.asExpressionWith(*declaredVars) }
+@JvmName("parseExpressionWithExt")
+fun String.parseExpressionWith(vararg declaredVars: String): KthParsingResult =
+    with(defaultCtx) { this@parseExpressionWith.parseExpressionWith(*declaredVars) }
 
 /**
  * Parses an arithmetic expression from the given string using the default context, then return its result.
@@ -95,14 +90,10 @@ fun String.asExpressionWith(vararg declaredVars: String): KthExpressionResult =
  *
  * @param expression the arithmetic expression to parse
  * @return the result of the expression
- * @throws KthIllegalTokenException if an illegal token is found in the expression during parsing
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
- * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
- * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
- * @see KthContext.resultOf
+ * @see KthContext.calculateResult
  */
-fun resultOf(expression: String): KthExpressionValueResult = with(defaultCtx) { this.resultOf(expression) }
+fun calculateResult(expression: String): KthParsingAndCalculationResult =
+    with(defaultCtx) { this.calculateResult(expression) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context, then return its result.
@@ -110,14 +101,11 @@ fun resultOf(expression: String): KthExpressionValueResult = with(defaultCtx) { 
  * Any unknown alphanumeric token that is not a number or an element is considered as a variable.
  *
  * @return the result of the expression
- * @throws KthIllegalTokenException if an illegal token is found in the expression during parsing
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
- * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
- * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
- * @see KthContext.getResult
+ * @see KthContext.calculateResult
  */
-fun String.getResult(): KthExpressionValueResult = with(defaultCtx) { this@getResult.getResult() }
+@JvmName("calculateResultExt")
+fun String.calculateResult(): KthParsingAndCalculationResult =
+    with(defaultCtx) { this@calculateResult.calculateResult() }
 
 /**
  * Parses an arithmetic expression from the given string using the default context, then return its result.
@@ -127,15 +115,10 @@ fun String.getResult(): KthExpressionValueResult = with(defaultCtx) { this@getRe
  * @param expression the arithmetic expression to parse
  * @param inputVars the input variables that are used in the expression
  * @return the result of the expression
- * @throws KthIllegalTokenException if an illegal token is found in the expression during parsing
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
- * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
- * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
- * @see KthContext.resultOfWith
+ * @see KthContext.calculateResultWith
  */
-fun resultOfWith(expression: String, vararg inputVars: Pair<String, Number>): KthExpressionValueResult =
-    with(defaultCtx) { this.resultOfWith(expression, *inputVars) }
+fun calculateResultWith(expression: String, vararg inputVars: Pair<String, Number>): KthParsingAndCalculationResult =
+    with(defaultCtx) { this.calculateResultWith(expression, *inputVars) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context, then return its result.
@@ -144,15 +127,11 @@ fun resultOfWith(expression: String, vararg inputVars: Pair<String, Number>): Kt
  *
  * @param inputVars the input variables that are used in the expression
  * @return the result of the expression
- * @throws KthIllegalTokenException if an illegal token is found in the expression during parsing
- * @throws KthMismatchedParenthesesException if some parentheses are mismatched
- * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
- * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
- * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
- * @see KthContext.getResultWith
+ * @see KthContext.calculateResultWith
  */
-fun String.getResultWith(vararg inputVars: Pair<String, Number>): KthExpressionValueResult =
-    with(defaultCtx) { this@getResultWith.getResultWith(*inputVars) }
+@JvmName("calculateResultWithExt")
+fun String.calculateResultWith(vararg inputVars: Pair<String, Number>): KthParsingAndCalculationResult =
+    with(defaultCtx) { this@calculateResultWith.calculateResultWith(*inputVars) }
 
 /**
  * Helper function to build a [KthContext].
@@ -163,33 +142,21 @@ fun String.getResultWith(vararg inputVars: Pair<String, Number>): KthExpressionV
 fun buildContext(block: KthContext.Builder.() -> Unit = {}) = KthContextImpl.BuilderImpl().apply(block).build()
 
 /**
- * Helper function to build a [KthContext] that includes [Modules.BASE].
- *
- * @param block the builder block
- * @return the created [KthContext]
- */
-fun buildBaseContext(block: KthContext.Builder.() -> Unit = {}) = buildContext { include(Modules.BASE); block() }
-
-/**
- * Helper function to build a [KthContext] that includes [Modules.BASE] and [Modules.MATH].
- *
- * @param block the builder block
- * @return the created [KthContext]
- */
-fun buildMathContext(block: KthContext.Builder.() -> Unit = {}) = buildBaseContext { include(Modules.MATH); block() }
-
-/**
  * Helper function to build a [KthContext] that includes [Modules.BASE], [Modules.MATH] and [Operators.POWER].
  *
  * @param block the builder block
  * @return the created [KthContext]
  */
-fun buildDefaultContext(block: KthContext.Builder.() -> Unit = {}) = buildMathContext { withPowerOperator(); block() }
+fun buildDefaultContext(block: KthContext.Builder.() -> Unit = {}) = buildContext {
+    include(Modules.BASE, Modules.MATH)
+    withPowerOperator()
+    block()
+}
 
 /**
  * Helper function to add the [Operators.POWER] operator to a [KthContext] builder.
  *
- * @return the current [Builder]
+ * @return the current [KthContext.Builder]
  */
 fun KthContext.Builder.withPowerOperator() = withOperator(Operators.POWER)
 

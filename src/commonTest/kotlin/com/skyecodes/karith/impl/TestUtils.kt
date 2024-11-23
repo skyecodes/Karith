@@ -30,7 +30,7 @@ internal val KthToken.value: Any
         is KthNumber -> if (round(value) == value) value.toInt() else value
         is KthVariable -> name
         is KthSymbol -> c
-        is KthContextualToken -> key
+        is KthElement -> key
     }
 
 internal fun num(value: Number) = KthNumber(value.toDouble())

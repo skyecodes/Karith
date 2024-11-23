@@ -28,9 +28,9 @@ package com.skyecodes.karith
 sealed class KthException(message: String) : Exception(message)
 
 /**
- * Represents exceptions that can be thrown while parsing the expression, before computing the result.
+ * Represents exceptions that can be thrown while parsing the expression, before calculating the result.
  */
-sealed class KthParseException(message: String) : KthException(message)
+sealed class KthParsingException(message: String) : KthException(message)
 
 /**
  * Thrown during tokenization if the input string contains an illegal token.
@@ -39,7 +39,15 @@ sealed class KthParseException(message: String) : KthException(message)
  * @property position The position of the illegal token.
  */
 class KthIllegalTokenException(val token: String, val position: Int) :
-    KthParseException("Illegal token \"$token\" at position $position")
+    KthParsingException("Illegal token \"$token\" at position $position")
+
+/**
+ * Thrown during tokenization if the input string requires a combiner operator and the context does not provide one.
+ *
+ * @property position The position of the illegal token.
+ */
+class KthUndefinedCombinerOperatorException(val position: Int) :
+    KthParsingException("Required combiner operator at position $position")
 
 /**
  * Thrown during token sorting if the input string contains mismatched parentheses.
@@ -47,34 +55,34 @@ class KthIllegalTokenException(val token: String, val position: Int) :
  * @property index The index of the parentheses token.
  */
 class KthMismatchedParenthesesException(val index: Int) :
-    KthParseException("Mismatched parentheses at token index $index")
+    KthParsingException("Mismatched parentheses at token index $index")
 
 /**
- * Represents exceptions that can be thrown while computing the result, after parsing the expression.
+ * Represents exceptions that can be thrown while calculating the result, after parsing the expression.
  */
-sealed class KthComputeException(message: String) : KthException(message)
+sealed class KthCalculationException(message: String) : KthException(message)
 
 /**
- * Thrown during computing if an input variable is not defined.
+ * Thrown during calculation if an input variable is not defined.
  *
  * @property variable The name of variable that is not defined.
  */
 class KthUndefinedVariableException(val variable: String) :
-    KthComputeException("Variable \"$variable\" is not defined")
+    KthCalculationException("Variable \"$variable\" is not defined")
 
 /**
- * Thrown during computing if a function / operator doesn't have enough arguments / operands.
+ * Thrown during calculation if a function / operator doesn't have enough arguments / operands.
  *
  * @property type "function" or "operator"
  * @property name The name of the function or operator.
  */
 class KthInsufficientOperandsException(val type: String, val name: String) :
-    KthComputeException("Stack contains too few operands to apply $type \"$name\"")
+    KthCalculationException("Stack contains too few operands to apply $type \"$name\"")
 
 /**
- * Thrown during computing if it encounters an unknown token.
+ * Thrown during calculation if it encounters an unknown token.
  *
  * @property token The unknown token.
  */
 class KthUnknownTokenException(val token: KthToken) :
-    KthComputeException("Unknown token \"$token\"")
+    KthCalculationException("Unknown token \"$token\"")

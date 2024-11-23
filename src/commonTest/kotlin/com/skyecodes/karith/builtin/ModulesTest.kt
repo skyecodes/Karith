@@ -24,7 +24,7 @@ package com.skyecodes.karith.builtin
 
 import app.cash.burst.Burst
 import app.cash.burst.burstValues
-import com.skyecodes.karith.KthContextualToken
+import com.skyecodes.karith.KthElement
 import com.skyecodes.karith.KthModule
 import com.skyecodes.karith.KthOperator
 import kotlin.test.Test
@@ -90,12 +90,12 @@ class ModulesTest {
     data class Arguments(
         val module: KthModule,
         val expectedCombinerOperator: KthOperator?,
-        val expectedElements: List<KthContextualToken>
+        val expectedElements: List<KthElement>
     ) {
         constructor(
             module: KthModule,
             expectedCombinerOperator: KthOperator?,
-            vararg expectedElements: KthContextualToken
+            vararg expectedElements: KthElement
         ) : this(module, expectedCombinerOperator, expectedElements.toList())
     }
 }

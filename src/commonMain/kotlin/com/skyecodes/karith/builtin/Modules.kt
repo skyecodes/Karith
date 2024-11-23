@@ -43,7 +43,7 @@ object Modules {
      */
     val BASE by lazy {
         buildModule {
-            withOperators(Operators.TIMES, Operators.DIVIDE, Operators.REMAINDER, Operators.PLUS, Operators.MINUS)
+            withOperator(Operators.TIMES, Operators.DIVIDE, Operators.REMAINDER, Operators.PLUS, Operators.MINUS)
             withCombinerOperator(Operators.TIMES)
         }
     }
@@ -64,7 +64,7 @@ object Modules {
      */
     val BITWISE by lazy {
         buildModule {
-            withOperators(
+            withOperator(
                 Operators.SHIFT_LEFT, Operators.SHIFT_RIGHT, Operators.UNSIGNED_SHIFT_RIGHT, Operators.AND,
                 Operators.OR, Operators.XOR
             )
@@ -95,7 +95,7 @@ object Modules {
      */
     val MATH_UTIL by lazy {
         buildModule {
-            withFunctions(
+            withFunction(
                 Functions.ABS, Functions.CEIL, Functions.FLOOR, Functions.HYPOT,
                 Functions.MAX, Functions.MIN, Functions.NEXT_DOWN, Functions.NEXT_TOWARDS, Functions.NEXT_UP,
                 Functions.POW, Functions.ROUND, Functions.SIGN, Functions.SQRT, Functions.TRUNCATE, Functions.ULP,
@@ -121,7 +121,7 @@ object Modules {
      */
     val MATH_LOG by lazy {
         buildModule {
-            withFunctions(
+            withFunction(
                 Functions.EXP, Functions.EXPM1, Functions.LN, Functions.LN1P, Functions.LOG,
                 Functions.LOG10, Functions.LOG2
             )
@@ -152,7 +152,7 @@ object Modules {
      */
     val MATH_TRIG by lazy {
         buildModule {
-            withFunctions(
+            withFunction(
                 Functions.ACOS, Functions.ACOSH, Functions.ASIN, Functions.ASINH, Functions.ATAN,
                 Functions.ATAN2, Functions.ATANH, Functions.COS, Functions.COSH, Functions.SIN, Functions.SINH,
                 Functions.TAN, Functions.TANH
@@ -170,6 +170,6 @@ object Modules {
      * * [Modules.MATH_TRIG]
      */
     val MATH by lazy {
-        buildModule { includeAll(MATH_UTIL, MATH_LOG, MATH_TRIG) }
+        buildModule { include(MATH_UTIL, MATH_LOG, MATH_TRIG) }
     }
 }

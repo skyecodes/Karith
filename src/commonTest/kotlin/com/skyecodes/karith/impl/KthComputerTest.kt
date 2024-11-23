@@ -37,7 +37,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 @Burst
-internal class KthComputerTest {
+internal class KthCalculaterTest {
     @Test
     fun testInvoke_ShouldReturnCorrectResult(
         args: Arguments = burstValues(
@@ -47,18 +47,18 @@ internal class KthComputerTest {
         )
     ) {
         val (tokens, variables, expectedResult) = args
-        assertEquals(KthComputer(tokens, variables), expectedResult)
+        assertEquals(KthCalculator(tokens, variables), expectedResult)
     }
 
     @Test
     fun testInvoke_ShouldThrowException_WhenVariableNotSet() {
-        assertFailsWith<KthUndefinedVariableException> { KthComputer(listOf(variable("a")), emptyMap()) }
+        assertFailsWith<KthUndefinedVariableException> { KthCalculator(listOf(variable("a")), emptyMap()) }
     }
 
     @Test
     fun testInvoke_ShouldThrowException_WhenUnknownToken() {
         assertFailsWith<KthUnknownTokenException> {
-            KthComputer(
+            KthCalculator(
                 listOf(
                     KthSymbol.LEFT_PARENTHESIS,
                     num(3),

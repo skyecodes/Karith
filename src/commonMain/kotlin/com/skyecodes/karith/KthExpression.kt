@@ -23,10 +23,10 @@
 package com.skyecodes.karith
 
 /**
- * Expressions contain all the data needed to evaluate an arithmetic expression
+ * Expressions contain all the data needed to calculate an arithmetic expression
  * when given input variables (if any are needed).
  *
- * You can compute an expression's result with the [getResult] or [getResultWith] method.
+ * You can calculate an expression's result with the [calculateResult] or [calculateResultWith] method.
  *
  * Expressions are built using a [KthContext].
  */
@@ -39,7 +39,7 @@ interface KthExpression {
     /**
      * Whether caching is enabled or not. Default is based on the context's cache property.
      *
-     * Caching avoids having to compute the same expression several times
+     * Caching avoids having to calculate the same expression several times
      * when using the same input variables.
      */
     var cacheEnabled: Boolean
@@ -61,25 +61,25 @@ interface KthExpression {
     fun enableCache() = apply { cacheEnabled = true }
 
     /**
-     * Evaluates the expression and returns its result.
+     * Calculates the expression and returns its result.
      *
      * @return the result of the expression
      * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
-     * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
+     * @throws KthUnknownTokenException if an unknown token is found in the expression during calculating
      */
-    fun getResult(): KthValueResult
+    fun calculateResult(): KthCalculationResult
 
     /**
-     * Evaluates the expression using the input variables and return its result.
+     * Calculates the expression using the input variables and return its result.
      *
      * @param inputVars the input variables
      * @return the result of the expression
      * @throws KthUndefinedVariableException if an expression variable doesn't have an associated value
      * @throws KthInsufficientOperandsException if an operator or function doesn't have enough operands to get applied
-     * @throws KthUnknownTokenException if an unknown token is found in the expression during computing
+     * @throws KthUnknownTokenException if an unknown token is found in the expression during calculating
      */
-    fun getResultWith(vararg inputVars: Pair<String, Number>): KthValueResult
+    fun calculateResultWith(vararg inputVars: Pair<String, Number>): KthCalculationResult
 
     /**
      * Clears the result cache of the expression.

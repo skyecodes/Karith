@@ -1,5 +1,3 @@
-# Building
-
 You can build Karith using these commands:
 
 ```shell

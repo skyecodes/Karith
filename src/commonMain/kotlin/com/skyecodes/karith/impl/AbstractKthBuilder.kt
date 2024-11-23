@@ -39,6 +39,6 @@ internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
         }
     }
 
-    private fun MutableMap<String, KthContextualToken>.putAllIfAbsent(vararg elements: Collection<KthContextualToken>) =
+    private fun MutableMap<String, KthElement>.putAllIfAbsent(vararg elements: Collection<KthElement>) =
         elements.flatMap { it }.filter { it.key !in this }.forEach { put(it.key, it) }
 }

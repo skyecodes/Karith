@@ -28,7 +28,7 @@ internal fun interface KthTokenizer {
     operator fun invoke(expr: String, declaredVars: List<String>?): KthTokenizerResult
 }
 
-internal fun KthTokenizer(elementMap: Map<String, KthContextualToken>, combinerOperator: KthOperator) =
+internal fun KthTokenizer(elementMap: Map<String, KthElement>, combinerOperator: KthOperator?) =
     KthTokenizer { expr, declaredVars ->
         with(KthTokenizerState(elementMap, combinerOperator, declaredVars)) {
             expr.forEach {
@@ -57,8 +57,8 @@ internal data class KthTokenizerResult(
 )
 
 internal data class KthTokenizerState(
-    val elementMap: Map<String, KthContextualToken>,
-    val combinerOperator: KthOperator,
+    val elementMap: Map<String, KthElement>,
+    val combinerOperator: KthOperator?,
     val declaredVars: List<String>?,
     var index: Int = 0,
     var buffer: String = "",
@@ -70,7 +70,7 @@ internal data class KthTokenizerState(
         if (tokens.isNotEmpty() && token !is KthOperator) {
             val last = tokens.last()
             if (last !is KthOperator && ((last == KthSymbol.RIGHT_PARENTHESIS || last !is KthSymbol) && token !is KthSymbol || token == KthSymbol.LEFT_PARENTHESIS && (last !is KthSymbol && last !is KthFunction))) {
-                tokens += combinerOperator
+                tokens += (combinerOperator ?: throw KthUndefinedCombinerOperatorException(index))
             }
         }
         tokens += token
@@ -88,18 +88,14 @@ internal data class KthTokenizerState(
                         addToken(KthNumber(num))
                     }
 
-                    subBuffer in elementMap -> {
-                        addToken(elementMap.getValue(subBuffer))
-                    }
+                    subBuffer in elementMap -> addToken(elementMap.getValue(subBuffer))
 
                     declaredVars != null && subBuffer in declaredVars -> {
                         detectedVariables += subBuffer
                         addToken(KthVariable(subBuffer))
                     }
 
-                    else -> {
-                        continue
-                    }
+                    else -> continue
                 }
                 buffer = buffer.substring(i, buffer.length)
                 subBufferDone = true

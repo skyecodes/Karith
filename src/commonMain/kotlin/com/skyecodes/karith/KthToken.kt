@@ -33,7 +33,7 @@ sealed interface KthToken
 /**
  * Common interface for [KthOperator], [KthFunction] and [KthConstant].
  */
-sealed interface KthContextualToken : KthToken {
+sealed interface KthElement : KthToken {
     /**
      * The key of the token. Used to parse the token in an expression.
      */
@@ -47,7 +47,7 @@ sealed interface KthContextualToken : KthToken {
  *
  * Operators can be built using the helper functions [createOperator] and [asOperator].
  */
-interface KthOperator : KthContextualToken {
+interface KthOperator : KthElement {
     /**
      * The operator precedence, which is used to determine the order of operations.
      */
@@ -75,7 +75,7 @@ interface KthOperator : KthContextualToken {
  *
  * Functions can be built using the helper functions [createFunction] and [asFunction].
  */
-interface KthFunction : KthContextualToken {
+interface KthFunction : KthElement {
     /**
      * The number of arguments of the function
      */
@@ -97,7 +97,7 @@ interface KthFunction : KthContextualToken {
  *
  * Constants can be built using the helper functions [createConstant] and [asConstant].
  */
-interface KthConstant : KthContextualToken {
+interface KthConstant : KthElement {
     /**
      * The value of the constant.
      */

@@ -26,7 +26,7 @@ import com.skyecodes.karith.KthResult.Error
 import com.skyecodes.karith.KthResult.Success
 
 /**
- * The base result class returned by all API methods used in parsing an expression or computing a result.
+ * The base result class returned by all API methods used in parsing an expression or calculating a result.
  * Can be either [Success] or [Error].
  */
 sealed interface KthResult<T, E : KthException> {
@@ -109,8 +109,8 @@ internal inline fun <T, E : KthException, T2, E2 : KthException> KthResult<T, E>
         is Error -> Error(error)
     }
 
-typealias KthExpressionResult = KthResult<KthExpression, KthParseException>
+typealias KthParsingResult = KthResult<KthExpression, KthParsingException>
 
-typealias KthValueResult = KthResult<Double, KthComputeException>
+typealias KthCalculationResult = KthResult<Double, KthCalculationException>
 
-typealias KthExpressionValueResult = KthResult<Double, out KthException>
+typealias KthParsingAndCalculationResult = KthResult<Double, out KthException>

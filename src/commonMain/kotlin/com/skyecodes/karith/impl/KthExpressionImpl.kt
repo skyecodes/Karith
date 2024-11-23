@@ -28,19 +28,19 @@ internal class KthExpressionImpl(
     internal val tokens: List<KthToken>,
     override val expressionVars: Set<String>,
     override var cacheEnabled: Boolean,
-    private val computer: KthComputer = KthComputer
+    private val calculator: KthCalculator = KthCalculator
 ) : KthExpression {
-    internal var singleResult: KthValueResult? = null
-    internal val resultCache = mutableMapOf<Map<String, Number>, KthValueResult>()
+    internal var singleResult: KthCalculationResult? = null
+    internal val resultCache = mutableMapOf<Map<String, Number>, KthCalculationResult>()
 
-    override fun getResult(): KthValueResult {
-        return singleResult ?: getResultWith().also { singleResult = it }
+    override fun calculateResult(): KthCalculationResult {
+        return singleResult ?: calculateResultWith().also { singleResult = it }
     }
 
-    override fun getResultWith(vararg inputVars: Pair<String, Number>): KthValueResult {
+    override fun calculateResultWith(vararg inputVars: Pair<String, Number>): KthCalculationResult {
         val variables = try {
             filterInputVariables(inputVars)
-        } catch (e: KthComputeException) {
+        } catch (e: KthCalculationException) {
             return error(e)
         }
         if (cacheEnabled) {
@@ -50,9 +50,9 @@ internal class KthExpressionImpl(
                 }
             }
         }
-        val result: KthValueResult = try {
-            success(computer(tokens, variables))
-        } catch (e: KthComputeException) {
+        val result: KthCalculationResult = try {
+            success(calculator(tokens, variables))
+        } catch (e: KthCalculationException) {
             error(e)
         }
         if (cacheEnabled) {

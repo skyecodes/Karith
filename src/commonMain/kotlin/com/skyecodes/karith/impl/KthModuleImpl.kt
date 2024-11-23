@@ -22,12 +22,12 @@
 
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.KthContextualToken
+import com.skyecodes.karith.KthElement
 import com.skyecodes.karith.KthModule
 import com.skyecodes.karith.KthOperator
 
 internal data class KthModuleImpl(
-    override val elementMap: Map<String, KthContextualToken>,
+    override val elementMap: Map<String, KthElement>,
     override val combinerOperator: KthOperator?
 ) : KthModule {
     internal class BuilderImpl : AbstractKthBuilder<KthModule.Builder>(), KthModule.Builder {

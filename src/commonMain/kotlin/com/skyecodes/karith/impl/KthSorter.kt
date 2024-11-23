@@ -42,7 +42,7 @@ internal fun interface KthSorter {
                 index++
             }
             while (operatorStack.isNotEmpty()) {
-                if (operatorStack.last() == KthSymbol.RIGHT_PARENTHESIS) {
+                if (operatorStack.last() is KthSymbol) {
                     throw KthMismatchedParenthesesException(index)
                 }
                 outputQueue += operatorStack.removeLast()

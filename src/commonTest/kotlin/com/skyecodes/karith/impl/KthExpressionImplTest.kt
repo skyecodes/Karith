@@ -33,49 +33,49 @@ import kotlin.test.*
 
 internal class KthExpressionImplTest {
     @Test
-    fun testResult_ShouldCallComputerAndSaveResult_ThenReturnCorrectResult() {
-        val kthComputer: KthComputer = mock<KthComputer>()
-        val expression = KthExpressionImpl(listOf(num(0)), emptySet(), false, kthComputer)
-        every { kthComputer(listOf(num(0)), emptyMap()) } returns -1.0
-        assertEquals(-1.0, expression.getResult().orThrow())
+    fun testResult_ShouldCallCalculaterAndSaveResult_ThenReturnCorrectResult() {
+        val kthCalculator: KthCalculator = mock<KthCalculator>()
+        val expression = KthExpressionImpl(listOf(num(0)), emptySet(), false, kthCalculator)
+        every { kthCalculator(listOf(num(0)), emptyMap()) } returns -1.0
+        assertEquals(-1.0, expression.calculateResult().orThrow())
         assertEquals(-1.0, expression.singleResult!!.orThrow())
-        assertEquals(-1.0, expression.getResult().orThrow())
-        verify(exactly(1)) { kthComputer(listOf(num(0)), emptyMap()) }
+        assertEquals(-1.0, expression.calculateResult().orThrow())
+        verify(exactly(1)) { kthCalculator(listOf(num(0)), emptyMap()) }
     }
 
     @Test
     fun testResult_ShouldThrowException_WhenVariablesRequiredAndNoInputVariables() {
         val expression = KthExpressionImpl(listOf(num(0)), setOf("a"), false)
-        assertFailsWith<KthUndefinedVariableException> { expression.getResult().orThrow() }
+        assertFailsWith<KthUndefinedVariableException> { expression.calculateResult().orThrow() }
     }
 
     @Test
-    fun testGetResultWith_ShouldCallComputerTwice_WhenCacheDisabled() {
-        val kthComputer: KthComputer = mock<KthComputer>()
-        val expression = KthExpressionImpl(listOf(num(0)), emptySet(), false, kthComputer)
-        every { kthComputer(listOf(num(0)), emptyMap()) } returns -1.0
-        expression.getResultWith()
+    fun testCalculateResultWith_ShouldCallCalculaterTwice_WhenCacheDisabled() {
+        val kthCalculator: KthCalculator = mock<KthCalculator>()
+        val expression = KthExpressionImpl(listOf(num(0)), emptySet(), false, kthCalculator)
+        every { kthCalculator(listOf(num(0)), emptyMap()) } returns -1.0
+        expression.calculateResultWith()
         assertTrue { expression.resultCache.isEmpty() }
-        expression.getResultWith()
-        verify(exactly(2)) { kthComputer(listOf(num(0)), emptyMap()) }
+        expression.calculateResultWith()
+        verify(exactly(2)) { kthCalculator(listOf(num(0)), emptyMap()) }
     }
 
     @Test
-    fun testGetResultWith_ShouldCallComputerOnce_WhenSameParamsAndCacheEnabled() {
-        val kthComputer: KthComputer = mock<KthComputer>()
-        val expression = KthExpressionImpl(listOf(num(0)), setOf("a"), true, kthComputer)
-        every { kthComputer(listOf(num(0)), any()) } returns -1.0
-        expression.getResultWith("a" to 1)
+    fun testCalculateResultWith_ShouldCallCalculaterOnce_WhenSameParamsAndCacheEnabled() {
+        val kthCalculator: KthCalculator = mock<KthCalculator>()
+        val expression = KthExpressionImpl(listOf(num(0)), setOf("a"), true, kthCalculator)
+        every { kthCalculator(listOf(num(0)), any()) } returns -1.0
+        expression.calculateResultWith("a" to 1)
         assertFalse { expression.resultCache.isEmpty() }
-        expression.getResultWith("a" to 1)
-        verify(exactly(1)) { kthComputer(listOf(num(0)), mapOf("a" to 1)) }
-        expression.getResultWith("a" to 2)
-        verify(exactly(1)) { kthComputer(listOf(num(0)), mapOf("a" to 2)) }
+        expression.calculateResultWith("a" to 1)
+        verify(exactly(1)) { kthCalculator(listOf(num(0)), mapOf("a" to 1)) }
+        expression.calculateResultWith("a" to 2)
+        verify(exactly(1)) { kthCalculator(listOf(num(0)), mapOf("a" to 2)) }
     }
 
     @Test
-    fun testGetResultWith_ShouldThrowException_WhenRequiredVariableNotSet() {
+    fun testCalculateResultWith_ShouldThrowException_WhenRequiredVariableNotSet() {
         val expression = KthExpressionImpl(listOf(num(0)), setOf("a"), false)
-        assertFailsWith<KthUndefinedVariableException> { expression.getResultWith().orThrow() }
+        assertFailsWith<KthUndefinedVariableException> { expression.calculateResultWith().orThrow() }
     }
 }

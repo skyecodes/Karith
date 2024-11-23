@@ -24,10 +24,10 @@ package com.skyecodes.karith.impl
 
 import com.skyecodes.karith.*
 
-internal fun interface KthComputer {
+internal fun interface KthCalculator {
     operator fun invoke(tokens: List<KthToken>, variables: Map<String, Number>): Double
 
-    companion object : KthComputer {
+    companion object : KthCalculator {
         override fun invoke(tokens: List<KthToken>, variables: Map<String, Number>): Double {
             val stack = ArrayDeque<Double>()
             tokens.forEach {
