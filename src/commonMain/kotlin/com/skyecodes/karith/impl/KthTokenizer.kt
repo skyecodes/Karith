@@ -1,12 +1,34 @@
+/*
+ * Copyright (c) 2024 skyecodes
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.api.*
+import com.skyecodes.karith.*
 
 internal fun interface KthTokenizer {
-    operator fun invoke(expr: String, declaredVars: List<String>?): Pair<List<KthToken>, Set<String>>
+    operator fun invoke(expr: String, declaredVars: List<String>?): KthTokenizerResult
 }
 
-internal fun KthTokenizer(elementMap: Map<String, KthElement>, combinerOperator: KthOperator) =
+internal fun KthTokenizer(elementMap: Map<String, KthContextualToken>, combinerOperator: KthOperator) =
     KthTokenizer { expr, declaredVars ->
         with(KthTokenizerState(elementMap, combinerOperator, declaredVars)) {
             expr.forEach {
@@ -25,12 +47,17 @@ internal fun KthTokenizer(elementMap: Map<String, KthElement>, combinerOperator:
                 index++
             }
             processBuffer()
-            tokens to detectedVariables
+            KthTokenizerResult(tokens, detectedVariables)
         }
     }
 
+internal data class KthTokenizerResult(
+    val tokens: List<KthToken>,
+    val detectedVariables: Set<String>,
+)
+
 internal data class KthTokenizerState(
-    val elementMap: Map<String, KthElement>,
+    val elementMap: Map<String, KthContextualToken>,
     val combinerOperator: KthOperator,
     val declaredVars: List<String>?,
     var index: Int = 0,

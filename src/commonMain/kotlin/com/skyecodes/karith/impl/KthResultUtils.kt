@@ -22,23 +22,12 @@
 
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.*
+import com.skyecodes.karith.KthException
+import com.skyecodes.karith.KthResult
 
-internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
-    override var modules: MutableList<KthModule> = mutableListOf()
-    override var operators: MutableList<KthOperator> = mutableListOf()
-    override var functions: MutableList<KthFunction> = mutableListOf()
-    override var constants: MutableList<KthConstant> = mutableListOf()
-    override var combinerOperator: KthOperator? = null
+internal fun <T, E : KthException> success(value: T): KthResult<T, E> = KthResult.Success<T, E>(value)
 
-    protected fun buildElementMap() = buildMap {
-        putAllIfAbsent(operators, functions, constants)
-        modules.forEach { lib ->
-            lib.elementMap.filter { it.key !in this }.forEach { put(it.key, it.value) }
-            if (combinerOperator == null) combinerOperator = lib.combinerOperator
-        }
-    }
-
-    private fun MutableMap<String, KthContextualToken>.putAllIfAbsent(vararg elements: Collection<KthContextualToken>) =
-        elements.flatMap { it }.filter { it.key !in this }.forEach { put(it.key, it) }
-}
+internal fun <T, E : KthException> error(
+    error: E,
+    also: (KthResult<T, E>) -> Unit = {}
+): KthResult<T, E> = KthResult.Error<T, E>(error).also(also)

@@ -20,25 +20,44 @@
  * SOFTWARE.
  */
 
-package com.skyecodes.karith.impl
+package com.skyecodes.karith
 
-import com.skyecodes.karith.*
+import com.skyecodes.karith.builtin.Modules
 
-internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
-    override var modules: MutableList<KthModule> = mutableListOf()
-    override var operators: MutableList<KthOperator> = mutableListOf()
-    override var functions: MutableList<KthFunction> = mutableListOf()
-    override var constants: MutableList<KthConstant> = mutableListOf()
-    override var combinerOperator: KthOperator? = null
+/**
+ * A module is a collection of [KthContextualToken]s to be included in a [KthContext].
+ *
+ * Karith has a few builtin module:
+ * * [Modules.BASE]
+ * * [Modules.BITWISE]
+ * * [Modules.MATH_UTIL]
+ * * [Modules.MATH_LOG]
+ * * [Modules.MATH_TRIG]
+ * * [Modules.MATH]
+ */
+interface KthModule {
+    /**
+     * All the elements contained in this module: [KthOperator]s, [KthFunction]s and [KthConstant]s.
+     */
+    val elementMap: Map<String, KthContextualToken>
 
-    protected fun buildElementMap() = buildMap {
-        putAllIfAbsent(operators, functions, constants)
-        modules.forEach { lib ->
-            lib.elementMap.filter { it.key !in this }.forEach { put(it.key, it.value) }
-            if (combinerOperator == null) combinerOperator = lib.combinerOperator
-        }
+    /**
+     * The combiner operator defines which operator is used to combine two tokens that don't have an operator between
+     * them.
+     */
+    val combinerOperator: KthOperator?
+
+    /**
+     * Builder interface for [KthModule].
+     *
+     * A module builder can be used with [buildModule].
+     */
+    interface Builder : KthBuilder<Builder> {
+        /**
+         * Builds the module.
+         *
+         * @return the module
+         */
+        fun build(): KthModule
     }
-
-    private fun MutableMap<String, KthContextualToken>.putAllIfAbsent(vararg elements: Collection<KthContextualToken>) =
-        elements.flatMap { it }.filter { it.key !in this }.forEach { put(it.key, it) }
 }

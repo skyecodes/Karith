@@ -20,25 +20,35 @@
  * SOFTWARE.
  */
 
-package com.skyecodes.karith.impl
+package com.skyecodes.karith.builtin
 
-import com.skyecodes.karith.*
+import com.skyecodes.karith.createConstant
 
-internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
-    override var modules: MutableList<KthModule> = mutableListOf()
-    override var operators: MutableList<KthOperator> = mutableListOf()
-    override var functions: MutableList<KthFunction> = mutableListOf()
-    override var constants: MutableList<KthConstant> = mutableListOf()
-    override var combinerOperator: KthOperator? = null
-
-    protected fun buildElementMap() = buildMap {
-        putAllIfAbsent(operators, functions, constants)
-        modules.forEach { lib ->
-            lib.elementMap.filter { it.key !in this }.forEach { put(it.key, it.value) }
-            if (combinerOperator == null) combinerOperator = lib.combinerOperator
-        }
+/**
+ * Object containing some useful constants.
+ *
+ * @see com.skyecodes.karith.KthConstant
+ */
+object Constants {
+    /**
+     * Base of the natural logarithms, approximately 2.71828.
+     *
+     * Usage: `e`
+     *
+     * @see kotlin.math.E
+     */
+    val E by lazy {
+        createConstant("e", kotlin.math.E)
     }
 
-    private fun MutableMap<String, KthContextualToken>.putAllIfAbsent(vararg elements: Collection<KthContextualToken>) =
-        elements.flatMap { it }.filter { it.key !in this }.forEach { put(it.key, it) }
+    /**
+     * Ratio of the circumference of a circle to its diameter, approximately 3.14159.
+     *
+     * Usage: `pi`
+     *
+     * @see kotlin.math.PI
+     */
+    val PI by lazy {
+        createConstant("pi", kotlin.math.PI)
+    }
 }
