@@ -17,6 +17,6 @@ This library is built on Kotlin Multiplatform. It does not require any external 
 
 ## External links
 
-* [KDoc](https://pages.skye.codes/Karith/)
+* [KDoc](https://karith.skye.codes/kdoc/)
 * [GitHub repository](https://github.com/skyecodes/Karith)
 * [Maven Central](https://search.maven.org/artifact/com.skyecodes.karith/karith)

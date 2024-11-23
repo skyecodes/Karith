@@ -9,20 +9,47 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-      - uses: actions/setup-python@v5
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: 21
+          distribution: 'adopt'
+          cache: 'gradle'
+
+      - name: Build KDoc
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: dokkaHtml
+
+      - name: Move KDoc
+        run: mv build/dokka/html/* docs/kdoc
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-      - uses: actions/cache@v4
+
+      - name: Setup cache
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - name: Load cache
+        uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+
+      - name: Install mkdocs-material
+        run: pip install mkdocs-material
+
+      - name: Deploy
+        run: mkdocs gh-deploy --force

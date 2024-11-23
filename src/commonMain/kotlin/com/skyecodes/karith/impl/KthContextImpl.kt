@@ -104,4 +104,4 @@ internal class KthContextImpl(
     }
 }
 
-typealias KthExpressionFactory = (List<KthToken>, Set<String>) -> KthExpression
+internal typealias KthExpressionFactory = (List<KthToken>, Set<String>) -> KthExpression

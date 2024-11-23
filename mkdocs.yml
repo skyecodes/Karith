@@ -1,5 +1,5 @@
 site_name: Karith
-site_url: https://pages.skye.codes/Karith
+site_url: https://karith.skye.codes
 theme:
   name: material
   palette:
@@ -59,6 +59,7 @@ nav:
   - advanced.md
   - building.md
   - glossary.md
+  - KDoc: kdoc/index.html
 repo_url: https://github.com/skyecodes/Karith
 repo_name: Karith
 edit_uri: edit/master/docs/
