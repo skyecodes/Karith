@@ -52,7 +52,7 @@ interface KthModule {
      *
      * A module builder can be used with [buildModule].
      */
-    interface Builder : KthBuilder<Builder> {
+    interface Builder : KthBuilder {
         /**
          * Builds the module.
          *

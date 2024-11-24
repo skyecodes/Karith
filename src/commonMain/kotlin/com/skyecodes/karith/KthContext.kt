@@ -22,6 +22,12 @@
 
 package com.skyecodes.karith
 
+import com.skyecodes.karith.KthContext.Companion.copy
+import com.skyecodes.karith.KthContext.Companion.parseExpression
+import com.skyecodes.karith.KthContext.Companion.parseExpressionWith
+import com.skyecodes.karith.builtin.Modules
+import com.skyecodes.karith.builtin.Operators
+import com.skyecodes.karith.impl.KthContextImpl
 import kotlin.jvm.JvmName
 
 /**
@@ -30,26 +36,15 @@ import kotlin.jvm.JvmName
  *
  * A context defines a certain set of operators, functions and constants that can be used in expressions.
  *
- * A context can be built using helper functions such as [buildContext], [buildBaseContext], [buildMathContext] or [buildDefaultContext].
+ * A context can be built using the [KthContext] method, or by [copy]ing an existing context like [KthContext].
  *
  * You can parse a string into an expression using the [parseExpression] or [parseExpressionWith] method.
  * Then you can calculate the expression's result using the [KthExpression.calculateResult] method.
  *
- * A global context [defaultCtx] is available.
+ * A default context [KthContext] is available.
  * Functions from this class can be used directly without having to create a context: the default context will be used.
  */
 interface KthContext {
-    /**
-     * Whether caching is enabled or not. Default is true.
-     *
-     * Caching avoids having to parse the same expression several times when given the same input string or tokens and
-     * can greatly increase the performance.
-     *
-     * By default, caching also avoids having to calculate the same expression several times when given the same input
-     * variables, though the caching capability can also be modified at the expression level.
-     */
-    val cacheEnabled: Boolean
-
     /**
      * Parses an arithmetic expression from the given string.
      *
@@ -160,29 +155,30 @@ interface KthContext {
     fun clearCache()
 
     /**
+     * Copies this context to create a new context containing the same elements.
+     *
+     * @param builder The context builder to add more elements to it.
+     */
+    fun copy(builder: Builder.() -> Unit): KthContext
+
+    /**
      * Builder interface for [KthContext].
      *
-     * A context builder can be used with [buildContext] and [buildDefaultContext].
+     * A context builder can be used with the [KthContext] method.
      */
-    interface Builder : KthBuilder<Builder> {
+    interface Builder : KthBuilder {
         /**
-         * Whether caching is enabled or not. Default is true.
+         * Disables the cache.
          *
          * Caching avoids having to parse the same expression several times when given the same input string or tokens and
          * can greatly increase the performance.
          *
          * By default, caching also avoids having to calculate the same expression several times when given the same input
          * variables, though the caching capability can also be modified at the expression level.
-         */
-        var enableCache: Boolean
-
-        /**
-         * Disables the cache.
          *
          * @return this builder
-         * @see enableCache
          */
-        fun disableCache() = apply { enableCache = false }
+        fun disableCache()
 
         /**
          * Builds the context.
@@ -191,4 +187,17 @@ interface KthContext {
          */
         fun build(): KthContext
     }
+
+    /**
+     * A default context that includes [Modules.BASE], [Modules.MATH] and [Operators.POWER].
+     *
+     * Expression and result caching is enabled for this context. Result caching can be manually turned off for any
+     * expression parsed by this context using [KthExpression.disableCache].
+     */
+    companion object : KthContext by KthContext({
+        include(Modules.BASE, Modules.MATH)
+        withPowerOperator()
+    })
 }
+
+fun KthContext(builder: KthContext.Builder.() -> Unit): KthContext = KthContextImpl.BuilderImpl().apply(builder).build()

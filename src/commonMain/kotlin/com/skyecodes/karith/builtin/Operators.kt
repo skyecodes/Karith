@@ -170,7 +170,7 @@ object Operators {
      *
      * **Note:** this operator is not compatible with [Operators.POWER]. They can't be included in the same context.
      *
-     * @see Int.or
+     * @see Int.xor
      */
     val XOR by lazy {
         createOperator("^", 6) { a, b ->

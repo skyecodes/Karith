@@ -2,3 +2,5 @@
 /.idea/
 /build/
 /venv/
+/.kotlin/
+/kotlin-js-store/

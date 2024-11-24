@@ -25,9 +25,9 @@ package com.skyecodes.karith.impl
 import com.skyecodes.karith.*
 
 internal class KthContextImpl(
-    elementMap: Map<String, KthElement>,
-    combinerOperator: KthOperator?,
-    override val cacheEnabled: Boolean,
+    private val elementMap: Map<String, KthElement>,
+    private val combinerOperator: KthOperator?,
+    private val cacheEnabled: Boolean,
     internal val tokenizer: KthTokenizer = KthTokenizer(elementMap, combinerOperator),
     private val sorter: KthSorter = KthSorter,
     private val expressionFactory: KthExpressionFactory = { sortedTokens, vars ->
@@ -44,7 +44,7 @@ internal class KthContextImpl(
         createExpression(expr, declaredVars.toList())
 
     private fun createExpression(expr: String, declaredVars: List<String>?): KthParsingResult {
-        if (cacheEnabled && expr in strExpressionCache) {
+        if (this@KthContextImpl.cacheEnabled && expr in strExpressionCache) {
             return strExpressionCache.getValue(expr)
         }
 
@@ -52,9 +52,9 @@ internal class KthContextImpl(
         val (tokens, vars) = try {
             tokenizer(expr, declaredVars)
         } catch (e: KthParsingException) {
-            return error(e) { if (cacheEnabled) strExpressionCache[expr] = it }
+            return error(e) { if (this@KthContextImpl.cacheEnabled) strExpressionCache[expr] = it }
         }
-        if (cacheEnabled && tokens in tokenizedExpressionCache) {
+        if (this@KthContextImpl.cacheEnabled && tokens in tokenizedExpressionCache) {
             val expression = tokenizedExpressionCache.getValue(tokens)
             strExpressionCache[expr] = expression
             return expression
@@ -65,13 +65,13 @@ internal class KthContextImpl(
             sorter(tokens)
         } catch (e: KthParsingException) {
             return error(e) {
-                if (cacheEnabled) {
+                if (this@KthContextImpl.cacheEnabled) {
                     strExpressionCache[expr] = it
                     tokenizedExpressionCache[tokens] = it
                 }
             }
         }
-        if (cacheEnabled && sortedTokens in sortedTokenizedExpressionCache) {
+        if (this@KthContextImpl.cacheEnabled && sortedTokens in sortedTokenizedExpressionCache) {
             val expression = sortedTokenizedExpressionCache.getValue(sortedTokens)
             strExpressionCache[expr] = expression
             tokenizedExpressionCache[tokens] = expression
@@ -80,7 +80,7 @@ internal class KthContextImpl(
 
         // Create expression
         val expression: KthParsingResult = success(expressionFactory(sortedTokens, vars))
-        if (cacheEnabled) {
+        if (this@KthContextImpl.cacheEnabled) {
             strExpressionCache[expr] = expression
             tokenizedExpressionCache[tokens] = expression
             sortedTokenizedExpressionCache[sortedTokens] = expression
@@ -94,12 +94,25 @@ internal class KthContextImpl(
         sortedTokenizedExpressionCache.clear()
     }
 
-    internal class BuilderImpl : AbstractKthBuilder<KthContext.Builder>(), KthContext.Builder {
-        override var enableCache = true
+    override fun copy(builder: KthContext.Builder.() -> Unit): KthContext {
+        return KthContext {
+            with(elementMap.values)
+            combinerOperator?.let { withCombinerOperator(it) }
+            if (!cacheEnabled) disableCache()
+            builder()
+        }
+    }
+
+    internal class BuilderImpl : AbstractKthBuilder(), KthContext.Builder {
+        private var cacheEnabled = true
+
+        override fun disableCache() {
+            cacheEnabled = false
+        }
 
         override fun build(): KthContext {
-            val elementMap = buildElementMap()
-            return KthContextImpl(elementMap, combinerOperator, enableCache)
+            val (elementMap, combinerOperator) = doBuild()
+            return KthContextImpl(elementMap, combinerOperator, cacheEnabled)
         }
     }
 }

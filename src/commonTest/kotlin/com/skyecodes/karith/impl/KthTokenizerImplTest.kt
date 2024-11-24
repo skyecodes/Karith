@@ -24,15 +24,15 @@ package com.skyecodes.karith.impl
 
 import app.cash.burst.Burst
 import app.cash.burst.burstValues
+import com.skyecodes.karith.KthContext
 import com.skyecodes.karith.KthIllegalTokenException
-import com.skyecodes.karith.buildDefaultContext
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertFailsWith
 
 @Burst
 class KthTokenizerImplTest {
-    private val ctx = buildDefaultContext() as KthContextImpl
+    private val ctx = KthContext.copy {} as KthContextImpl
 
     @Test
     fun testInvoke_ShouldReturnCorrectTokens(

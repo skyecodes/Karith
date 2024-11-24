@@ -43,7 +43,7 @@ object Modules {
      */
     val BASE by lazy {
         buildModule {
-            withOperator(Operators.TIMES, Operators.DIVIDE, Operators.REMAINDER, Operators.PLUS, Operators.MINUS)
+            with(Operators.TIMES, Operators.DIVIDE, Operators.REMAINDER, Operators.PLUS, Operators.MINUS)
             withCombinerOperator(Operators.TIMES)
         }
     }
@@ -64,11 +64,10 @@ object Modules {
      */
     val BITWISE by lazy {
         buildModule {
-            withOperator(
+            with(
                 Operators.SHIFT_LEFT, Operators.SHIFT_RIGHT, Operators.UNSIGNED_SHIFT_RIGHT, Operators.AND,
-                Operators.OR, Operators.XOR
+                Operators.OR, Operators.XOR, Functions.NOT
             )
-            withFunction(Functions.NOT)
         }
     }
 
@@ -95,7 +94,7 @@ object Modules {
      */
     val MATH_UTIL by lazy {
         buildModule {
-            withFunction(
+            with(
                 Functions.ABS, Functions.CEIL, Functions.FLOOR, Functions.HYPOT,
                 Functions.MAX, Functions.MIN, Functions.NEXT_DOWN, Functions.NEXT_TOWARDS, Functions.NEXT_UP,
                 Functions.POW, Functions.ROUND, Functions.SIGN, Functions.SQRT, Functions.TRUNCATE, Functions.ULP,
@@ -121,11 +120,10 @@ object Modules {
      */
     val MATH_LOG by lazy {
         buildModule {
-            withFunction(
+            with(
                 Functions.EXP, Functions.EXPM1, Functions.LN, Functions.LN1P, Functions.LOG,
-                Functions.LOG10, Functions.LOG2
+                Functions.LOG10, Functions.LOG2, Constants.E
             )
-            withConstant(Constants.E)
         }
     }
 
@@ -152,12 +150,11 @@ object Modules {
      */
     val MATH_TRIG by lazy {
         buildModule {
-            withFunction(
+            with(
                 Functions.ACOS, Functions.ACOSH, Functions.ASIN, Functions.ASINH, Functions.ATAN,
                 Functions.ATAN2, Functions.ATANH, Functions.COS, Functions.COSH, Functions.SIN, Functions.SINH,
-                Functions.TAN, Functions.TANH
+                Functions.TAN, Functions.TANH, Constants.PI
             )
-            withConstant(Constants.PI)
         }
     }
 

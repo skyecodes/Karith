@@ -27,7 +27,7 @@ jobs:
       - name: Build KDoc
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: dokkaHtml
+          arguments: dokkaHtml --no-daemon
 
       - name: Move KDoc
         run: mv build/dokka/html/* docs/kdoc

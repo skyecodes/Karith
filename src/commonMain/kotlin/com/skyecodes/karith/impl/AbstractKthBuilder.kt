@@ -22,23 +22,41 @@
 
 package com.skyecodes.karith.impl
 
-import com.skyecodes.karith.*
+import com.skyecodes.karith.KthBuilder
+import com.skyecodes.karith.KthElement
+import com.skyecodes.karith.KthModule
+import com.skyecodes.karith.KthOperator
 
-internal abstract class AbstractKthBuilder<T : KthBuilder<T>> : KthBuilder<T> {
-    override var modules: MutableList<KthModule> = mutableListOf()
-    override var operators: MutableList<KthOperator> = mutableListOf()
-    override var functions: MutableList<KthFunction> = mutableListOf()
-    override var constants: MutableList<KthConstant> = mutableListOf()
-    override var combinerOperator: KthOperator? = null
+internal abstract class AbstractKthBuilder : KthBuilder {
+    private var modules: MutableList<KthModule> = mutableListOf()
+    private var elements: MutableList<KthElement> = mutableListOf()
+    private var combinerOperator: KthOperator? = null
 
-    protected fun buildElementMap() = buildMap {
-        putAllIfAbsent(operators, functions, constants)
+    override fun include(vararg modules: KthModule) {
+        this.modules += modules
+    }
+
+    override fun include(modules: Iterable<KthModule>) {
+        this.modules += modules
+    }
+
+    override fun with(vararg elements: KthElement) {
+        this.elements += elements
+    }
+
+    override fun with(elements: Iterable<KthElement>) {
+        this.elements += elements
+    }
+
+    override fun withCombinerOperator(operator: KthOperator) {
+        this.combinerOperator = operator
+    }
+
+    protected fun doBuild(): Pair<Map<String, KthElement>, KthOperator?> = buildMap {
+        elements.filter { it.key !in this }.forEach { put(it.key, it) }
         modules.forEach { lib ->
             lib.elementMap.filter { it.key !in this }.forEach { put(it.key, it.value) }
             if (combinerOperator == null) combinerOperator = lib.combinerOperator
         }
-    }
-
-    private fun MutableMap<String, KthElement>.putAllIfAbsent(vararg elements: Collection<KthElement>) =
-        elements.flatMap { it }.filter { it.key !in this }.forEach { put(it.key, it) }
+    } to combinerOperator
 }

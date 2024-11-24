@@ -22,9 +22,9 @@
 
 package com.skyecodes.karith.impl
 
+import com.skyecodes.karith.KthContext
 import com.skyecodes.karith.KthExpression
 import com.skyecodes.karith.KthToken
-import com.skyecodes.karith.buildDefaultContext
 import com.skyecodes.karith.builtin.Operators
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -60,7 +60,7 @@ internal class KthContextImplTest {
 
     @Test
     fun testExpression_ShouldUseExpressionCache() {
-        val ctx = buildDefaultContext() as KthContextImpl
+        val ctx = KthContext.copy {} as KthContextImpl
         ctx.parseExpression("1+2")
         ctx.parseExpression("1+2")
         assertSame(ctx.parseExpression("1+2"), ctx.parseExpression("1+2"))
@@ -73,7 +73,7 @@ internal class KthContextImplTest {
 
     @Test
     fun testExpression_ShouldNotUseExpressionCache_WhenCacheDisabled() {
-        val ctx = buildDefaultContext { disableCache() } as KthContextImpl
+        val ctx = KthContext.copy { disableCache() } as KthContextImpl
         assertFalse { ctx.parseExpression("1+2") === ctx.parseExpression("1+2") }
         assertTrue { ctx.strExpressionCache.isEmpty() }
         assertFalse { ctx.parseExpression("1+2") === ctx.parseExpression("1 + 2") }

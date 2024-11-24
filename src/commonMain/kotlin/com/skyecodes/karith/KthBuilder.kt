@@ -25,31 +25,14 @@ package com.skyecodes.karith
 /**
  * Common builder interface for [KthContext.Builder] and [KthModule.Builder].
  */
-interface KthBuilder<T : KthBuilder<T>> {
+interface KthBuilder {
     /**
-     * The modules included in this context or module.
+     * Includes modules to this context or module.
+     *
+     * @param modules the modules to include
+     * @return this builder
      */
-    var modules: MutableList<KthModule>
-
-    /**
-     * The operators included in this context or module.
-     */
-    var operators: MutableList<KthOperator>
-
-    /**
-     * The functions included in this context or module.
-     */
-    var functions: MutableList<KthFunction>
-
-    /**
-     * The constants included in this context or module.
-     */
-    var constants: MutableList<KthConstant>
-
-    /**
-     * The combiner operator set in this context or module.
-     */
-    var combinerOperator: KthOperator?
+    fun include(vararg modules: KthModule)
 
     /**
      * Includes modules to this context or module.
@@ -57,21 +40,7 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param modules the modules to include
      * @return this builder
      */
-    fun include(vararg modules: KthModule) = doApply { this.modules += modules }
-
-    /**
-     * Includes an element to this context or module.
-     *
-     * @param element the element to include
-     * @return this builder
-     */
-    fun with(element: KthElement) = doApply {
-        when (element) {
-            is KthOperator -> operators += element
-            is KthFunction -> functions += element
-            is KthConstant -> constants += element
-        }
-    }
+    fun include(modules: Iterable<KthModule>)
 
     /**
      * Includes elements to this context or module.
@@ -79,39 +48,15 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param elements the elements to include
      * @return this builder
      */
-    fun with(vararg elements: KthElement) = doApply {
-        elements.forEach {
-            when (it) {
-                is KthOperator -> operators += it
-                is KthFunction -> functions += it
-                is KthConstant -> constants += it
-            }
-        }
-    }
+    fun with(vararg elements: KthElement)
 
     /**
-     * Includes operators to this context or module.
+     * Includes elements to this context or module.
      *
-     * @param operators the operators to include
+     * @param elements the elements to include
      * @return this builder
      */
-    fun withOperator(vararg operators: KthOperator) = doApply { this.operators += operators }
-
-    /**
-     * Includes functions to this context or module.
-     *
-     * @param functions the functions to include
-     * @return this builder
-     */
-    fun withFunction(vararg functions: KthFunction) = doApply { this.functions += functions }
-
-    /**
-     * Includes constants to this context or module.
-     *
-     * @param constants the constants to include
-     * @return this builder
-     */
-    fun withConstant(vararg constants: KthConstant) = doApply { this.constants += constants }
+    fun with(elements: Iterable<KthElement>)
 
     /**
      * Sets the combiner operator of this context or module.
@@ -119,10 +64,5 @@ interface KthBuilder<T : KthBuilder<T>> {
      * @param operator the combiner operator
      * @return this builder
      */
-    fun withCombinerOperator(operator: KthOperator) = doApply { combinerOperator = operator }
-
-    private fun doApply(block: T.() -> Unit): T = self().apply(block)
-
-    @Suppress("UNCHECKED_CAST")
-    private fun self() = this as T
+    fun withCombinerOperator(operator: KthOperator)
 }

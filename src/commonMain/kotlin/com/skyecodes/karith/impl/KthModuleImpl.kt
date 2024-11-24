@@ -30,9 +30,9 @@ internal data class KthModuleImpl(
     override val elementMap: Map<String, KthElement>,
     override val combinerOperator: KthOperator?
 ) : KthModule {
-    internal class BuilderImpl : AbstractKthBuilder<KthModule.Builder>(), KthModule.Builder {
+    internal class BuilderImpl : AbstractKthBuilder(), KthModule.Builder {
         override fun build(): KthModule {
-            val elementMap = buildElementMap()
+            val (elementMap, combinerOperator) = doBuild()
             return KthModuleImpl(elementMap, combinerOperator)
         }
     }

@@ -22,18 +22,16 @@
 
 package com.skyecodes.karith
 
-import com.skyecodes.karith.builtin.Modules
+import com.skyecodes.karith.KthContext.Companion.calculateResult
+import com.skyecodes.karith.KthContext.Companion.calculateResultWith
+import com.skyecodes.karith.KthContext.Companion.parseExpression
+import com.skyecodes.karith.KthContext.Companion.parseExpressionWith
 import com.skyecodes.karith.builtin.Operators
-import com.skyecodes.karith.impl.*
+import com.skyecodes.karith.impl.KthConstantImpl
+import com.skyecodes.karith.impl.KthFunctionImpl
+import com.skyecodes.karith.impl.KthModuleImpl
+import com.skyecodes.karith.impl.KthOperatorImpl
 import kotlin.jvm.JvmName
-
-/**
- * A default context that includes [Modules.BASE], [Modules.MATH] and [Operators.POWER].
- *
- * Expression and result caching is enabled for this context. Result caching can be manually turned off for any
- * expression parsed by this context using [KthExpression.disableCache].
- */
-val defaultCtx: KthContext by lazy { buildDefaultContext() }
 
 /**
  * Parses an arithmetic expression from the given string using the default context.
@@ -44,7 +42,7 @@ val defaultCtx: KthContext by lazy { buildDefaultContext() }
  * @return the parsed [KthExpression]
  * @see KthContext.parseExpression
  */
-fun parseExpression(expression: String): KthParsingResult = with(defaultCtx) { this.parseExpression(expression) }
+fun parseExpression(expression: String): KthParsingResult = with(KthContext) { this.parseExpression(expression) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context.
@@ -55,7 +53,7 @@ fun parseExpression(expression: String): KthParsingResult = with(defaultCtx) { t
  * @see KthContext.parseExpression
  */
 @JvmName("parseExpressionExt")
-fun String.parseExpression(): KthParsingResult = with(defaultCtx) { this@parseExpression.parseExpression() }
+fun String.parseExpression(): KthParsingResult = with(KthContext) { this@parseExpression.parseExpression() }
 
 /**
  * Parses an arithmetic expression from the given string and declared variables using the default context.
@@ -68,7 +66,7 @@ fun String.parseExpression(): KthParsingResult = with(defaultCtx) { this@parseEx
  * @see KthContext.parseExpressionWith
  */
 fun parseExpressionWith(expression: String, vararg declaredVars: String): KthParsingResult =
-    with(defaultCtx) { this.parseExpressionWith(expression, *declaredVars) }
+    with(KthContext) { this.parseExpressionWith(expression, *declaredVars) }
 
 /**
  * Parses an arithmetic expression from the receiving string and declared variables using the default context.
@@ -81,7 +79,7 @@ fun parseExpressionWith(expression: String, vararg declaredVars: String): KthPar
  */
 @JvmName("parseExpressionWithExt")
 fun String.parseExpressionWith(vararg declaredVars: String): KthParsingResult =
-    with(defaultCtx) { this@parseExpressionWith.parseExpressionWith(*declaredVars) }
+    with(KthContext) { this@parseExpressionWith.parseExpressionWith(*declaredVars) }
 
 /**
  * Parses an arithmetic expression from the given string using the default context, then return its result.
@@ -93,7 +91,7 @@ fun String.parseExpressionWith(vararg declaredVars: String): KthParsingResult =
  * @see KthContext.calculateResult
  */
 fun calculateResult(expression: String): KthParsingAndCalculationResult =
-    with(defaultCtx) { this.calculateResult(expression) }
+    with(KthContext) { this.calculateResult(expression) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context, then return its result.
@@ -105,7 +103,7 @@ fun calculateResult(expression: String): KthParsingAndCalculationResult =
  */
 @JvmName("calculateResultExt")
 fun String.calculateResult(): KthParsingAndCalculationResult =
-    with(defaultCtx) { this@calculateResult.calculateResult() }
+    with(KthContext) { this@calculateResult.calculateResult() }
 
 /**
  * Parses an arithmetic expression from the given string using the default context, then return its result.
@@ -118,7 +116,7 @@ fun String.calculateResult(): KthParsingAndCalculationResult =
  * @see KthContext.calculateResultWith
  */
 fun calculateResultWith(expression: String, vararg inputVars: Pair<String, Number>): KthParsingAndCalculationResult =
-    with(defaultCtx) { this.calculateResultWith(expression, *inputVars) }
+    with(KthContext) { this.calculateResultWith(expression, *inputVars) }
 
 /**
  * Parses an arithmetic expression from the receiving string using the default context, then return its result.
@@ -131,34 +129,14 @@ fun calculateResultWith(expression: String, vararg inputVars: Pair<String, Numbe
  */
 @JvmName("calculateResultWithExt")
 fun String.calculateResultWith(vararg inputVars: Pair<String, Number>): KthParsingAndCalculationResult =
-    with(defaultCtx) { this@calculateResultWith.calculateResultWith(*inputVars) }
-
-/**
- * Helper function to build a [KthContext].
- *
- * @param block the builder block
- * @return the created [KthContext]
- */
-fun buildContext(block: KthContext.Builder.() -> Unit = {}) = KthContextImpl.BuilderImpl().apply(block).build()
-
-/**
- * Helper function to build a [KthContext] that includes [Modules.BASE], [Modules.MATH] and [Operators.POWER].
- *
- * @param block the builder block
- * @return the created [KthContext]
- */
-fun buildDefaultContext(block: KthContext.Builder.() -> Unit = {}) = buildContext {
-    include(Modules.BASE, Modules.MATH)
-    withPowerOperator()
-    block()
-}
+    with(KthContext) { this@calculateResultWith.calculateResultWith(*inputVars) }
 
 /**
  * Helper function to add the [Operators.POWER] operator to a [KthContext] builder.
  *
  * @return the current [KthContext.Builder]
  */
-fun KthContext.Builder.withPowerOperator() = withOperator(Operators.POWER)
+fun KthContext.Builder.withPowerOperator() = with(Operators.POWER)
 
 /**
  * Helper function to build a [KthContext].
